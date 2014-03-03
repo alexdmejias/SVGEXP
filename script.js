@@ -2,17 +2,20 @@ width = document.body.clientWidth;
 l = 10;
 p = 5;
 
-q = 25;
-
+q = 20;
+line_anim_duration = 50;
+new_anim_delay = 50;
 cordinates_used = [];
 remaining_cordinates = [];
 var timer;
 width = (l*q)+((q-1)*p);
 var shape_length;
 
+
 parent_div = document.getElementsByClassName('container')[0];
-// parent_div.setAttribute('width', width + 'px');
+
 parent_div.style.width = width + 1 + "px";
+parent_div.style.height = width + 1 + "px";
 
 svg_elem = document.getElementsByTagName('svg')[0];
 
@@ -50,7 +53,7 @@ function createSquare(x, y) {
 			group.last().attr({
 				'stroke-dasharray' : shape_length,
 				'stroke-dashoffset': shape_length
-			}).animate(500).attr({
+			}).animate(line_anim_duration).attr({
 				'stroke-dashoffset': 0
 			});
 			// cordinates_used.push(cords_picked);
@@ -59,7 +62,7 @@ function createSquare(x, y) {
 			// createSquare(cords_to_use[0], cords_to_use[1]);
 			console.info('new square')
 		// }
-		timer = setTimeout(kickoff, 50);
+		timer = setTimeout(kickoff, new_anim_delay);
 }
 
 function kickoff() {
