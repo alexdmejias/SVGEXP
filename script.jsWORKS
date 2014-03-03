@@ -1,0 +1,27 @@
+var current_frame, total_frames, path, length, handle, myobj;
+var init = function(index) {
+  current_frame = 0;
+  total_frames = 60;
+  path = document.getElementsByTagName('path')[index];
+  l = path.getTotalLength();
+  path.style.strokeDasharray = l + ' ' + l;
+  path.style.strokeDashoffset = l;
+  handle = 0;
+
+  draw();
+}
+
+
+var draw = function() {
+   var progress = current_frame/total_frames;
+   if (progress > 1) {
+     window.cancelAnimationFrame(handle);
+   } else {
+     current_frame++;
+     path.style.strokeDashoffset = Math.floor(l * (1 - progress));
+     handle = window.requestAnimationFrame(draw);
+   }
+   console.log(progress);
+};
+
+init(0);

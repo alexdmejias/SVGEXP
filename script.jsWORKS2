@@ -1,0 +1,43 @@
+var draw = SVG(document.getElementsByTagName('svg')[0]).fixSubPixelOffset();
+group = draw.group();
+width = document.body.clientWidth;
+l = 10;
+p = 5;
+squares_left = [];
+for (var i = 0; 30 > i; i ++) {
+	for(var h = 0; 30 > h; h++) {
+		group.path('M'+(((l*i)+(p*i))+1)+' '+ ((l*h)+(p*h)+1) +'H '+((l*(i+1))+(p*i))+'V '+((l*(h+1))+(p*h))+'H '+(((l*i)+(p*i))+1)+'Z').attr({
+			'fill': '#fff',
+			'stroke' : 'red',
+			'strokeWidth': 5
+		});
+	}
+
+	squares_left.push(i);
+}
+var length = group.first().length()
+group.each(function() {
+	this.attr({
+	'stroke-dasharray' : length,
+	'stroke-dashoffset': length
+	})
+});
+
+
+function animate(i) {
+	group.get(i).animate(1000).attr({
+		'stroke-dashoffset': 0
+	})
+}
+
+timer = setInterval(function() {
+	if (squares_left.length > 0) {
+		random = Math.floor(Math.random() * squares_left.length)
+		animate(squares_left[random]);
+
+		squares_left.splice(random, 1)
+	} else {
+		console.log('clearning timer');
+		window.clearInterval(timer);
+	}
+}, 1000);
