@@ -6,20 +6,25 @@ define([], function () {
 			p: 5, // padding per shape
 			horQ: null,
 			verQ: null,
-			lineAnimDuration: 50, // line animation duration
-			newAnimDelay: 50, // time between new squares
+			margin: {
+				top: 20,
+				right: 20,
+				bottom: 20,
+				left: 20
+			},
+			shape: {
+				fill: '#fff',
+				stroke : 'red',
+				strokeWidth: 1,
+			},
+			lineAnimDuration: 500, // line animation duration
+			newAnimDelay: 500, // time between new squares
 			remainingCordinates: null,
 			newShapeTimer: null,
-			shapeLength: null,
 
 			calcMaxQuantity: function () {
-				this.horQ = app.viewportSize.x / (this.p + this.l);
-				this.verQ = app.viewportSize.y / (this.p + this.l);
-			},
-
-			setupCanvas: function () {
-				app.container.style.width = app.viewportSize.x + 1 + 'px';
-				app.container.style.height = app.viewportSize.y + 1 + 'px';
+				this.horQ = parseInt(app.container.style.width) / (this.p + this.l);
+				this.verQ = parseInt(app.container.style.height) / (this.p + this.l);
 			},
 
 			// generates an array of cordinates for the loop to pick from
@@ -46,13 +51,13 @@ define([], function () {
 						this.shapeLength = app.parentGroup.first().length();
 					}
 
-					app.parentGroup.last().attr({
-						'fill': '#fff',
-						'stroke' : 'red',
-						'strokeWidth': 1,
+					app.parentGroup.last().style({
+						'fill': this.shape.fill,
+						'stroke': this.shape.stroke,
+						'stroke-width': this.shape.strokeWidth,
 						'stroke-dasharray' : this.shapeLength,
 						'stroke-dashoffset': this.shapeLength
-					}).animate(this.lineAnimDuration).attr({
+					}).animate(this.lineAnimDuration).style({
 						'stroke-dashoffset': 0
 					});
 
@@ -90,7 +95,6 @@ define([], function () {
 			// style the parent box and start the whole animation
 			init: function() {
 				this.calcMaxQuantity();
-				this.setupCanvas();
 				this.genGrid(this.horQ, this.verQ);
 				this.animationStart();
 			}

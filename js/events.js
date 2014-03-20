@@ -1,24 +1,39 @@
 define([], function() {
 	'use strict';
 
-	return {
-		init : function(app) {
-			console.log(app);
-			app.buttons.addEventListener('click', function(e) {
-				if(e.target.tagName == 'A') {
-					demo = e.target.getAttribute('data-demo');
+	return function(app) {
+		return {
+			getViewportSize: function() {
+				app.viewportSize = {
+					width: document.documentElement.clientWidth,
+					height: document.documentElement.clientHeight
+				};
+			},
 
-					body = document.getElementsByTagName('body')[0];
-					body.className = demo;
+			demoSwitch: function() {
+				app.buttons.addEventListener('click', function(e) {
+					if(e.target.tagName == 'A') {
 
-					// if (typeof app.priorAnimation != 'undefined') {
-					// 	app.animations[app.priorAnimation].reset()
-					// }
+						var currentDemo = e.target.getAttribute('data-demo');
 
-					app.animations[demo].init();
-				}
+						app.priorAnimation = app.currentAnimation;
 
-			});
-		}
+						if ((app.priorAnimation != currentDemo) && (app.priorAnimation !== '')) {
+							app.animations[app.priorAnimation].reset();
+						}
+
+						document.getElementsByTagName('body')[0].className = currentDemo;
+
+						app.animations[currentDemo].init();
+						app.currentAnimation = currentDemo;
+					}
+				});
+			},
+
+			init : function() {
+				this.getViewportSize();
+				this.demoSwitch();
+			}
+		};
 	};
 });
