@@ -1,3 +1,4 @@
+// TODO: make sure only one timer can be used
 define([], function () {
 	'use strict';
 	return function (app) {
@@ -23,8 +24,8 @@ define([], function () {
 			newShapeTimer: null,
 
 			calcMaxQuantity: function () {
-				this.horQ = parseInt(app.container.style.width) / (this.p + this.l);
-				this.verQ = parseInt(app.container.style.height) / (this.p + this.l);
+				this.horQ = Math.floor(parseInt(app.container.style.width) / (this.p + this.l));
+				this.verQ = Math.floor(parseInt(app.container.style.height) / (this.p + this.l));
 			},
 
 			// generates an array of cordinates for the loop to pick from
