@@ -8,6 +8,7 @@ define([], function () {
 			shapeMaxWidth: 500,
 			iteration: 0,
 			color: 'red',
+			colors: ['red', 'green', 'blue', 'black'],
 
 			randomGen: function (shapeMaxWidth) {
 				return Math.floor(Math.random() * shapeMaxWidth);
@@ -30,21 +31,17 @@ define([], function () {
 			},
 
 			drawShape: function (num_shapes) {
-				var stroke = {
-					'width': 0,
-					'color': this.color
-				};
-
+				var color = Math.floor(Math.random() * this.colors.length);
 				var translate = this.shapeMaxWidth * this.iteration;
 
 				app.parentGroup.add(app.draw.group());
 				this.pointsMaker(this.num_points);
 
 				// TODO: find a better way to do this
-				app.parentGroup.last().polygon([this.p[0], this.p[1], this.p[2], this.p[3]]).translate(translate).fill({'color': this.color, 'opacity': 0.16});
-				app.parentGroup.last().polygon([this.p[0], this.p[1], this.p[5], this.p[6]]).translate(translate).fill({'color': this.color, 'opacity': 0.33});
-				app.parentGroup.last().polygon([this.p[0], this.p[3], this.p[4], this.p[5]]).translate(translate).fill({'color': this.color, 'opacity': 0.50});
-				app.parentGroup.last().polygon([this.p[2], this.p[3], this.p[4], this.p[6]]).translate(translate).fill({'color': this.color, 'opacity': 0.66});
+				app.parentGroup.last().polygon([this.p[0], this.p[1], this.p[2], this.p[3]]).translate(translate).fill({'color': this.colors[color], 'opacity': 0.16});
+				app.parentGroup.last().polygon([this.p[0], this.p[1], this.p[5], this.p[6]]).translate(translate).fill({'color': this.colors[color], 'opacity': 0.33});
+				app.parentGroup.last().polygon([this.p[0], this.p[3], this.p[4], this.p[5]]).translate(translate).fill({'color': this.colors[color], 'opacity': 0.50});
+				app.parentGroup.last().polygon([this.p[2], this.p[3], this.p[4], this.p[6]]).translate(translate).fill({'color': this.colors[color], 'opacity': 0.66});
 				this.iteration++;
 			},
 
