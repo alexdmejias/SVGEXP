@@ -1,6 +1,29 @@
 body {
 	margin: 0;
+	background: #d2d1d5;
 }
+
+a, a:visited {
+	text-decoration: none;
+	color: #fff;
+	text-transform: uppercase;
+	font-family: sans-serif;
+	letter-spacing: 1px;
+}
+
+.name {
+	display: block;
+	text-align: right;
+	padding: 3px 10px;
+}
+
+.nav {
+	background: #000;
+	background: rgba(0,0,0,0.1);
+	padding: 50px 10px;
+	border-bottom: 5px solid rgba(0,0,0,0.1);
+}
+
 #container, svg {
 	display: block;
     margin: 0 auto;
