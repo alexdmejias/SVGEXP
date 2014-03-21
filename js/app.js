@@ -4,7 +4,7 @@ define(['svg', 'events', 'demo1', 'demo2', 'demo3'], function(SVG, events, demo1
     var App = {
 		buttons: document.getElementsByClassName('demos')[0],
 		container: document.getElementById('container'),
-		currentAnimation : '',
+		currentAnimation : 'a',
 		priorAnimation: '',
 		animations: {},
 		viewportSize: {},
@@ -23,6 +23,8 @@ define(['svg', 'events', 'demo1', 'demo2', 'demo3'], function(SVG, events, demo1
 		appinit: function() {
 			events(App).init();
 			App.setupNameSpaces();
+
+			App.animations.a.init();
 		}
 
     };
