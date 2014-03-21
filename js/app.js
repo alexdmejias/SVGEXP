@@ -2,7 +2,8 @@ define(['svg', 'events', 'demo1', 'demo2', 'demo3'], function(SVG, events, demo1
 	'use strict';
 
     var App = {
-		buttons: document.getElementsByClassName('demos')[0],
+		header: document.getElementsByTagName('header')[0],
+		buttons: document.getElementsByClassName('nav')[0],
 		container: document.getElementById('container'),
 		currentAnimation : 'a',
 		priorAnimation: '',
@@ -11,7 +12,7 @@ define(['svg', 'events', 'demo1', 'demo2', 'demo3'], function(SVG, events, demo1
 
 		setupNameSpaces: function() {
 			App.container.style.width = App.viewportSize.width + 'px';
-			App.container.style.height = App.viewportSize.height - App.buttons.clientHeight - 4 + 'px';
+			App.container.style.height = App.viewportSize.height - App.header.clientHeight - 4 + 'px';
 
 			App.draw = SVG('container').fixSubPixelOffset(),
 			App.parentGroup = App.draw.group();
