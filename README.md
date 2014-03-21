@@ -6,5 +6,5 @@
 * change title
 * add title/desc
 * grunt
-* A: reuse shadow
+* ~~A: reuse shadow~~
 * B: center animation

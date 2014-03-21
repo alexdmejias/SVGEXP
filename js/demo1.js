@@ -1,4 +1,3 @@
-// idea: put a shadow at the bottom of the shape
 // idea: generate points in a clockwise way by providing a min/max range to the generator
 define([], function () {
 	'use strict';
@@ -18,7 +17,7 @@ define([], function () {
 					'opacity': 0.05,
 					'filter': 'url(#shadow)'
 				},
-				height: 50,
+				height: 10,
 				blur: {
 					height: 50,
 					blur: 2
@@ -84,17 +83,20 @@ define([], function () {
 					.move(this.shadow.points[0], this.shadow.yPos)
 					.style(this.shadow.style);
 
-				var defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs'),
-					filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter'),
-					blur = document.createElementNS('http://www.w3.org/2000/svg', 'feGaussianBlur');
+				if (!document.getElementById('shadow')) {
+					var defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs'),
+						filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter'),
+						blur = document.createElementNS('http://www.w3.org/2000/svg', 'feGaussianBlur');
 
-				filter.setAttribute('id', 'shadow');
-				filter.setAttribute('height', this.shadow.blur.height);
 
-				blur.setAttribute('in', 'SourceGraphic');
-				blur.setAttribute('stdDeviation', this.shadow.blur.blur);
+					filter.setAttribute('id', 'shadow');
+					filter.setAttribute('height', this.shadow.blur.height);
 
-				document.getElementById(app.parentGroup).appendChild(defs).appendChild(filter).appendChild(blur);
+					blur.setAttribute('in', 'SourceGraphic');
+					blur.setAttribute('stdDeviation', this.shadow.blur.blur);
+
+					document.getElementById(app.parentGroup).appendChild(defs).appendChild(filter).appendChild(blur);
+				}
 			},
 
 			setupCanvas: function () {
