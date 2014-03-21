@@ -14,7 +14,6 @@ define([], function () {
 				left: 20
 			},
 			shape: {
-				fill: '#fff',
 				stroke : 'red',
 				strokeWidth: 1,
 			},
@@ -53,7 +52,6 @@ define([], function () {
 					}
 
 					app.parentGroup.last().style({
-						'fill': this.shape.fill,
 						'stroke': this.shape.stroke,
 						'stroke-width': this.shape.strokeWidth,
 						'stroke-dasharray' : this.shapeLength,

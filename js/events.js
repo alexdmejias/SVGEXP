@@ -18,7 +18,7 @@ define([], function() {
 
 						app.priorAnimation = app.currentAnimation;
 
-						if ((app.priorAnimation != currentDemo) && (app.priorAnimation !== '')) {
+						if ((app.priorAnimation !== currentDemo) && (app.priorAnimation !== '')) {
 							app.animations[app.priorAnimation].reset();
 						}
 
