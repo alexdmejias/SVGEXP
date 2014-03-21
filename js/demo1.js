@@ -15,10 +15,14 @@ define([], function () {
 			colors: ['red', 'green', 'blue', 'black'],
 			shadow: {
 				style: {
-					'opacity': 0.05
+					'opacity': 0.05,
+					'filter': 'url(#shadow)'
 				},
 				height: 50,
-				blur: 2,
+				blur: {
+					height: 50,
+					blur: 2
+				},
 				yPos: 500,
 				points: []
 			},
@@ -80,8 +84,17 @@ define([], function () {
 					.move(this.shadow.points[0], this.shadow.yPos)
 					.style(this.shadow.style);
 
+				var defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs'),
+					filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter'),
+					blur = document.createElementNS('http://www.w3.org/2000/svg', 'feGaussianBlur');
 
-				// TODO: Add shadow blur
+				filter.setAttribute('id', 'shadow');
+				filter.setAttribute('height', this.shadow.blur.height);
+
+				blur.setAttribute('in', 'SourceGraphic');
+				blur.setAttribute('stdDeviation', this.shadow.blur.blur);
+
+				document.getElementById(app.parentGroup).appendChild(defs).appendChild(filter).appendChild(blur);
 			},
 
 			setupCanvas: function () {
