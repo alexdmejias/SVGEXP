@@ -1,3 +1,4 @@
+// idea: put a shadow at the bottom of the shape
 define([], function () {
 	'use strict';
 	return function (app) {
@@ -38,10 +39,10 @@ define([], function () {
 				this.pointsMaker(this.num_points);
 
 				// TODO: find a better way to do this
-				app.parentGroup.last().polygon([this.p[0], this.p[1], this.p[2], this.p[3]]).translate(translate).fill({'color': this.colors[color], 'opacity': 0.16});
-				app.parentGroup.last().polygon([this.p[0], this.p[1], this.p[5], this.p[6]]).translate(translate).fill({'color': this.colors[color], 'opacity': 0.33});
-				app.parentGroup.last().polygon([this.p[0], this.p[3], this.p[4], this.p[5]]).translate(translate).fill({'color': this.colors[color], 'opacity': 0.50});
-				app.parentGroup.last().polygon([this.p[2], this.p[3], this.p[4], this.p[6]]).translate(translate).fill({'color': this.colors[color], 'opacity': 0.66});
+				app.parentGroup.last().polygon([this.p[0], this.p[1], this.p[2], this.p[3]]).translate(translate).fill({'color': this.colors[color], 'opacity': 0.35});
+				app.parentGroup.last().polygon([this.p[0], this.p[1], this.p[5], this.p[6]]).translate(translate).fill({'color': this.colors[color], 'opacity': 0.50});
+				app.parentGroup.last().polygon([this.p[0], this.p[3], this.p[4], this.p[5]]).translate(translate).fill({'color': this.colors[color], 'opacity': 0.75});
+				app.parentGroup.last().polygon([this.p[2], this.p[3], this.p[4], this.p[6]]).translate(translate).fill({'color': this.colors[color], 'opacity': 0.90});
 				this.iteration++;
 			},
 
