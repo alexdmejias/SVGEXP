@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 	require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
 	var paths = {
@@ -35,7 +35,7 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				files: {
-					'<%= paths.libraryDir %>/css/styles.css':'<%= paths.libraryDir %>/scss/styles.scss'
+					'<%= paths.libraryDir %>/css/styles.css': '<%= paths.libraryDir %>/scss/styles.scss'
 				}
 			}
 		},
@@ -74,32 +74,26 @@ module.exports = function(grunt) {
 		connect: {
 			server: {
 				options: {
-					hostname :''
+					hostname: ''
 				}
 			}
 		},
 
-        rsync: {
-            options: {
-                src: "./",
-                args: ["--verbose"],
-                exclude: ['.git*', 'node_modules', '.sass-cache', 'Gruntfile.js', 'package.json', '.DS_Store', 'README.md', 'server_creds.json'],
-                recursive: true,
-                syncDestIgnoreExcl: true
-            },
-            staging: {
-                options: {
-                    dest: "<%= creds.path.staging %>",
-                    host: "<%= creds.user %>@<%= creds.ip %>"
-                }
-            },
-            prod: {
-                options: {
-                    dest: "<%= creds.path.prod %>",
-                    host: "<%= creds.user %>@<%= creds.ip %>"
-                }
-            }
-        }
+		rsync: {
+			options: {
+				src: './',
+				args: ['--verbose'],
+				exclude: ['.git*', 'node_modules', '.sass-cache', 'Gruntfile.js', 'package.json', '.DS_Store', 'README.md', 'server_creds.json', '.bowerrc', '.editorconfig', '.jshintrc', 'bower.json'],
+				recursive: true,
+				syncDestIgnoreExcl: true
+			},
+			staging: {
+				options: {
+					dest: '<%= creds.path.staging %>',
+					host: '<%= creds.user %>@<%= creds.ip %>'
+				}
+			}
+		}
 
 	});
 
