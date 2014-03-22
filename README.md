@@ -1,10 +1,11 @@
 #todo
 * resize events
 * add controls
-* add link to github repo
+* add requirejs grunt task
+* ~~add link to github repo~~
 * style header moar
-* change title
+* ~~change title~~
 * add title/desc
-* grunt
+* ~~grunt~~
 * ~~A: reuse shadow~~
 * B: center animation
