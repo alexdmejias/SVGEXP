@@ -22,6 +22,16 @@ define([], function () {
 			remainingCordinates: null,
 			newShapeTimer: null,
 
+			stop: function () {
+				window.clearTimeout(this.newShapeTimer);
+			},
+
+			reset: function () {
+				console.log('resetting anim B');
+				this.stop();
+				app.parentGroup.clear();
+			},
+
 			calcMaxQuantity: function () {
 				this.horQ = Math.floor(parseInt(app.container.style.width) / (this.p + this.l));
 				this.verQ = Math.floor(parseInt(app.container.style.height) / (this.p + this.l));
@@ -51,17 +61,17 @@ define([], function () {
 						this.shapeLength = app.parentGroup.first().length();
 					}
 
-					app.parentGroup.last().style({
-						'stroke': this.shape.stroke,
-						'stroke-width': this.shape.strokeWidth,
-						'stroke-dasharray' : this.shapeLength,
-						'stroke-dashoffset': this.shapeLength
-					}).animate(this.lineAnimDuration).style({
-						'stroke-dashoffset': 0
+					app.parentGroup.last().stroke({
+						'color': this.shape.stroke,
+						'width': this.shape.strokeWidth,
+						'dasharray' : this.shapeLength,
+						'dashoffset': this.shapeLength
+					}).animate(this.lineAnimDuration).stroke({
+						'dashoffset': 0
 					});
 
 					// start a new timer for the next shape
-					this.newShapeTimer = setTimeout(function() {
+					this.newShapeTimer = setTimeout(function () {
 						app.animations.b.animationStart();
 					}, this.newAnimDelay);
 			},
@@ -76,23 +86,12 @@ define([], function () {
 					this.remainingCordinates.splice(r,1);
 				} else {
 					// stop animation if there are no more cordinates left
-					this.animationStop();
+					this.stop();
 				}
 			},
 
-			animationStop: function () {
-				window.clearTimeout(this.newShapeTimer);
-			},
-
-
-			reset: function() {
-				console.log('resetting anim B');
-				this.animationStop();
-				app.parentGroup.clear();
-			},
-
 			// style the parent box and start the whole animation
-			init: function() {
+			init: function () {
 				this.calcMaxQuantity();
 				this.genGrid(this.horQ, this.verQ);
 				this.animationStart();
