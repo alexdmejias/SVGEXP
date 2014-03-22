@@ -22,11 +22,15 @@ define([], function () {
 				window.clearTimeout(this.newShapeTimer);
 			},
 
+			stop: function () {
+				window.clearTimeout(this.newShapeTimer);
+			},
+
 			setupCanvas: function () {
 			},
 
 			genRandInRange: function (min, max) {
-			    return Math.floor(Math.random() * (max - min + 1)) + min;
+				return Math.floor(Math.random() * (max - min + 1)) + min;
 			},
 
 			genShape: function () {
@@ -49,22 +53,12 @@ define([], function () {
 					});
 			},
 
-			generator: function() {
+			generator: function () {
 				var self = this;
 				this.newShapeTimer = window.setTimeout(function () {
-					// REMOVE ONE SHAPE FOR
-					// app.parentGroup.
-					// if (app.parentGroup.children().length > 20) {
-						// app.parentGroup.first().remove();
-						console.log(app.parentGroup.children().length);
-					// }
 					self.genShape();
 					self.generator();
 				}, this.newShapeDelay);
-			},
-
-			animationStop: function () {
-				window.clearTimeout(this.newShapeTimer);
 			},
 
 			init: function () {
