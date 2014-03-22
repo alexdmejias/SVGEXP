@@ -3,7 +3,7 @@ define(['svg', 'events', 'demo1', 'demo2', 'demo3'], function(SVG, events, demo1
 
     var App = {
 		header: document.getElementsByTagName('header')[0],
-		buttons: document.getElementsByClassName('nav')[0],
+		buttons: document.getElementsByTagName('nav')[0],
 		container: document.getElementById('container'),
 		currentAnimation : 'a',
 		priorAnimation: '',
