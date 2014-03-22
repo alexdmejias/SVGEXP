@@ -1,6 +1,6 @@
 requirejs.config({
     paths: {
-        'svg': 'libs/svg.min'
+        'svg': 'libs/svg.js/dist/svg.min'
     },
     shim: {
         'svg': {
