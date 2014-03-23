@@ -101,7 +101,7 @@ define([], function () {
 
 			setupCanvas: function () {
 				app.draw.style({
-					'width': this.shapeMaxWidth
+					'width': this.shapeMaxWidth + 'px'
 				});
 			},
 
