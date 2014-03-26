@@ -1,4 +1,4 @@
-define(['svg', 'events', 'demo1', 'demo2', 'demo3'], function (SVG, events, demo1, demo2, demo3) {
+define(['svg', 'events', 'demos/demo1', 'demos/demo2', 'demos/demo3', 'demos/demo4'], function (SVG, events, demo1, demo2, demo3, demo4) {
 	'use strict';
 
 	var App = {
@@ -19,13 +19,14 @@ define(['svg', 'events', 'demo1', 'demo2', 'demo3'], function (SVG, events, demo
 			App.animations.a = demo1(App);
 			App.animations.b = demo2(App);
 			App.animations.c = demo3(App);
+			App.animations.d = demo4(App);
 
 		},
 		appinit: function () {
 			events(App).init();
 			App.setupNameSpaces();
 
-			App.animations.a.init();
+			App.animations.d.init();
 		}
 
 	};

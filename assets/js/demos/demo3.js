@@ -19,7 +19,7 @@ define([], function () {
 
 			reset: function () {
 				app.parentGroup.clear();
-				window.clearTimeout(this.newShapeTimer);
+				this.stop();
 			},
 
 			stop: function () {
