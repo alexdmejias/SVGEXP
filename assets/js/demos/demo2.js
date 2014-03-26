@@ -18,7 +18,7 @@ define([], function () {
 				strokeWidth: 1,
 			},
 			lineAnimDuration: 500, // line animation duration
-			newAnimDelay: 500, // time between new squares
+			newAnimDelay: 10, // time between new squares
 			remainingCordinates: null,
 			newShapeTimer: null,
 
