@@ -3,8 +3,8 @@ define([], function () {
 	return function (app) {
 		return {
 			shape: {
-				color: 'red',
-				opacity: 0.5
+				fill: 'red',
+				opacity: 0.25
 			},
 			maxWidth: 400,
 			widthOffset: 100,
@@ -15,9 +15,10 @@ define([], function () {
 			newShapeTimer: null,
 			newShapeDelay: 250,
 			minShapeAnimateDelay: 1000,
-			maxShapeAnimateDelay: 5000,
+			maxShapeAnimateDelay: 3000,
 
 			reset: function () {
+				console.log('resetting anim C');
 				app.parentGroup.clear();
 				this.stop();
 			},
@@ -45,8 +46,9 @@ define([], function () {
 						[(this.rightPadding + this.maxWidth + this.widthOffset + app.viewportSize.width) , (y+shapeHeight)],
 						[(this.rightPadding + this.widthOffset + app.viewportSize.width), (y + shapeHeight)]
 					])
-					.fill(this.shape)
+					.attr(this.shape)
 					.animate(transitionTime)
+					.opacity(1)
 					.x(-(this.maxWidth + this.widthOffset + this.leftPadding) )
 					.after( function () {
 						this.remove();
