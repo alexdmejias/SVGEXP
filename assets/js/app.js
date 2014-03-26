@@ -5,7 +5,7 @@ define(['svg', 'events', 'demos/demo1', 'demos/demo2', 'demos/demo3', 'demos/dem
 		header: document.getElementsByTagName('header')[0],
 		buttons: document.getElementsByTagName('nav')[0],
 		container: document.getElementById('container'),
-		currentAnimation : 'a',
+		currentAnimation : '',
 		priorAnimation: '',
 		animations: {},
 		viewportSize: {},
