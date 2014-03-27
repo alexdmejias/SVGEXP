@@ -3,7 +3,12 @@ define([], function () {
     return function (app) {
         return {
             shape: {
-                opacity: 0.5
+                start: {
+                    opacity: 0
+                },
+               end: {
+                    opacity: 0.5
+               }
             },
             grid: {
                 width: 1,
@@ -16,7 +21,7 @@ define([], function () {
             newShapeTimer: null,
             placeShapesTimer: null,
             currShapeCount: 0,
-            maxShapesTotal: 5,
+            maxShapesTotal: 30,
 
             reset: function () {
                 console.log('resetting anim D');
@@ -33,7 +38,6 @@ define([], function () {
             },
 
             setupCanvas: function () {
-                // app.container.style.width = this.shapeWidth * this.gridLength;
                 app.draw.style({
                     'width': this.shapeWidth * this.gridLength + 'px'
                 });
@@ -44,24 +48,30 @@ define([], function () {
             },
 
             genShape: function () {
-                var xPos = Math.floor(Math.random() * this.gridLength);
-                var yPos = Math.floor(Math.random() * this.gridLength);
-                var translate = Math.floor(Math.random() * 4) * 90;
+                var xPos = Math.floor(Math.random() * this.gridLength),
+                    yPos = Math.floor(Math.random() * this.gridLength),
+                    translatePos = Math.floor(Math.random() * 4) * 90;
 
                 app.parentGroup.polygon([
                     [this.shapeWidth * xPos, yPos * this.shapeWidth],
                     [this.shapeWidth*(xPos+1), yPos*this.shapeWidth],
                     [(xPos*this.shapeWidth)+(this.shapeWidth/2),(yPos*this.shapeWidth)+(this.shapeWidth/2)]
                 ])
-                .rotate(translate, (xPos*this.shapeWidth)+(this.shapeWidth/2),(yPos*this.shapeWidth)+(this.shapeWidth/2))
-                .attr({ fill: '#ddd'})
+                .rotate(translatePos, (xPos*this.shapeWidth)+(this.shapeWidth/2),(yPos*this.shapeWidth)+(this.shapeWidth/2))
+                .attr(this.shape.start)
                 .animate()
-                .attr({ fill: '#000'})
+                .attr(this.shape.end);
             },
 
-            genGrid: function () {
-                var gridGroup = app.parentGroup.group().attr('clas','grid');
-                var lineLength = this.gridLength * this.shapeWidth;
+            genGridLines: function () {
+                // group that wiil house grid lines
+                var gridGroup = app.parentGroup.group().attr('clas','grid'),
+                // cache of total line length
+                    lineLength = this.gridLength * this.shapeWidth,
+                // how much time has to pass after the grid finished for the shapes to appear
+                    timeAfterGrid = (this.gridLength * 100) + 500,
+                    self = this;
+
                 this.grid.dasharray = lineLength;
                 this.grid.dashoffset = lineLength;
 
@@ -74,31 +84,33 @@ define([], function () {
                     .stroke(this.grid);
                 }
 
-                var self = this;
+                // animate each line
                 gridGroup.each(function(i) {
                     this.animate(75 * i).stroke({'dashoffset': 0});
                 });
 
+                // call on the shapes generator to after the grid finished
                 this.placeShapesTimer = window.setTimeout(function () {
                     self.generator.call(self);
-                }, (this.gridLength * 100) + 1000)
+
+                }, timeAfterGrid);
 
             },
 
             generator: function () {
                 var self = this;
-                if ((this.currShapeCount + 1) < this.maxShapesTotal) {
+                if ((this.currShapeCount) < this.maxShapesTotal) {
                     this.newShapeTimer = window.setTimeout(function () {
                         self.genShape();
                         self.generator();
-                        self.currShapeCount++;
                     }, this.newShapeDelay);
                 }
+                this.currShapeCount++;
             },
 
             init: function () {
                 this.setupCanvas();
-                this.genGrid();
+                this.genGridLines();
             }
         };
     };
