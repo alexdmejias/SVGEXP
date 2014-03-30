@@ -1,6 +1,6 @@
 define([], function () {
     'use strict';
-    return function (app) {
+    return function (app, h) {
         return {
             shape: {
                 start: {
@@ -15,7 +15,7 @@ define([], function () {
                 color: '#bbb'
             },
             // amount of time between new shapes being generated
-            newShapeDelay: 250,
+            newShapeDelay: 200,
             // placeholder for the timer var
             newShapeTimer: null,
             // the length of each shape
@@ -24,49 +24,46 @@ define([], function () {
             gridLength: 10,
             // placeholder for the coordinates
             gridCordinates: [],
+            // grid ids placeholder
+            gridCordinatesIds: [],
             /*maxShapes: 3,*/
             placeShapesTimer: null,
             // placeholder for the current amount of shapes
             currShapeCount: 0,
             // maximum amount of shapes(triangles) to make
-            maxShapesTotal: 100,
+            maxShapesTotal: 400,
 
             reset: function () {
                 console.log('resetting anim D');
                 app.parentGroup.clear();
                 this.currShapeCount = 0;
-                window.clearTimeout(this.newShapeTimer);
+                this.gridCordinatesIds = [];
+                h.stop(this.newShapeTimer);
                 app.draw.style({
                     'width': '100%'
                 });
-            },
-
-            stop: function () {
-                window.clearTimeout(this.newShapeTimer);
+                h.drawWidth('100%');
             },
 
             setupCanvas: function () {
-                app.draw.style({
-                    'width': this.shapeLength * this.gridLength + 'px'
-                });
+                h.drawWidth(app, this.shapeLength * this.gridLength + 'px');
             },
 
-            genRandInRange: function (min, max) {
-                return Math.floor(Math.random() * (max - min + 1)) + min;
+            genCoordinate: function () {
+                var yRand = h.genRandInRange(0, this.gridLength - 1);
+                var xRand = h.genRandInRange(0, this.gridLength - 1);
+                var angle = h.genRandInRange(0, 3) * 90;
+
+                return [xRand, yRand, angle];
+
             },
 
-            genGrid: function () {
-                var grid = [];
-                for ( var i = 0; i < (this.maxShapesTotal); i++) {
-                    grid.push([Math.floor(Math.random() * this.gridLength), Math.floor(Math.random() * this.gridLength), Math.floor(Math.random() * 4) * 90]);
-                }
-
-                this.gridCordinates = grid;
+            genId: function(coords) {
+                return coords.join('');
             },
 
-            genShape: function () {
-                var coords = this.gridCordinates[0];
-
+            // draw one of the shapes using one of the grid coordinates
+            genShape: function (coords) {
                 app.parentGroup.polygon([
                     [this.shapeLength * coords[0], coords[1] * this.shapeLength],
                     [this.shapeLength*(coords[0]+1), coords[1]*this.shapeLength],
@@ -74,12 +71,13 @@ define([], function () {
                 ])
                 .rotate(coords[2], (coords[0]*this.shapeLength)+(this.shapeLength/2),(coords[1]*this.shapeLength)+(this.shapeLength/2))
                 .attr(this.shape.start)
+                .attr('class', coords.join(''))
                 .animate()
                 .attr(this.shape.end);
 
-                this.gridCordinates.splice(0, 1);
             },
 
+            // draw the grid lines
             genGridLines: function () {
                 // group that wiil house grid lines
                 var gridGroup = app.parentGroup.group().attr('clas','grid'),
@@ -114,20 +112,34 @@ define([], function () {
 
             },
 
+            loop: function () {
+                var coords = this.genCoordinate();
+                var id = this.genId(coords);
+
+                if (this.gridCordinatesIds.indexOf(id) == -1) {
+                    this.genShape(coords);
+                    this.gridCordinatesIds.push(id);
+                    this.currShapeCount++;
+                    this.generator();
+                } else {
+                    this.loop();
+                }
+
+
+            },
+
             generator: function () {
                 var self = this;
                 if ((this.currShapeCount) < this.maxShapesTotal) {
-                    this.newShapeTimer = window.setTimeout(function () {
-                        self.genShape();
-                        self.generator();
+                    console.log('this is the generator running');
+                    this.newShapeTimer = window.setTimeout(function() {
+                        self.loop();
                     }, this.newShapeDelay);
                 }
-                this.currShapeCount++;
             },
 
             init: function () {
                 this.setupCanvas();
-                this.genGrid();
                 this.genGridLines();
             }
         };

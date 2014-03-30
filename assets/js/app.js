@@ -1,4 +1,5 @@
-define(['svg', 'events', 'demos/demo1', 'demos/demo2', 'demos/demo3', 'demos/demo4'], function (SVG, events, demo1, demo2, demo3, demo4) {
+define(['svg', 'events', 'helpers', 'demos/demo1', 'demos/demo2', 'demos/demo3', 'demos/demo4'],
+	function (SVG, events, helpers, demo1, demo2, demo3, demo4) {
 	'use strict';
 
 	var App = {
@@ -16,17 +17,18 @@ define(['svg', 'events', 'demos/demo1', 'demos/demo2', 'demos/demo3', 'demos/dem
 
 			App.draw = SVG('container').fixSubPixelOffset(),
 			App.parentGroup = App.draw.group();
-			App.animations.a = demo1(App);
-			App.animations.b = demo2(App);
-			App.animations.c = demo3(App);
-			App.animations.d = demo4(App);
+			App.animations.a = demo1(App, helpers);
+			App.animations.b = demo2(App, helpers);
+			App.animations.c = demo3(App, helpers);
+			App.animations.d = demo4(App, helpers);
 
 		},
 		appinit: function () {
 			events(App).init();
 			App.setupNameSpaces();
 
-			App.animations.d.init();
+			App.currentAnimation = 'c';
+			App.animations[App.currentAnimation].init();
 		}
 
 	};
