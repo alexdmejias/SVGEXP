@@ -50,40 +50,40 @@ define(['../helpers'], function (h) {
 
 			// given an X and Y, it will create a square, it will then animate its stroke
 			createSquare: function (x, y) {
-					// clear the previous timer, should help with performance
-					window.clearTimeout(this.newShapeTimer);
+				// clear the previous timer, should help with performance
+				window.clearTimeout(this.newShapeTimer);
 
-					// make the path
-					app.parentGroup.path('M ' + (((this.l * x) + (this.p * x)) + 1) + ' ' + ((this.l * y) + (this.p * y) + 1) + 'H ' + ((this.l * (x + 1)) + (this.p * x)) + ' V ' + ((this.l * (y + 1)) + (this.p * y)) + 'H ' + (((this.l * x) + (this.p * x)) + 1) + 'Z');
+				// make the path
+				app.parentGroup.path('M ' + (((this.l * x) + (this.p * x)) + 1) + ' ' + ((this.l * y) + (this.p * y) + 1) + 'H ' + ((this.l * (x + 1)) + (this.p * x)) + ' V ' + ((this.l * (y + 1)) + (this.p * y)) + 'H ' + (((this.l * x) + (this.p * x)) + 1) + 'Z');
 
-					// define the length of the shape incase it hasnt already
-					if (typeof this.shapeLength == 'undefined'){
-						this.shapeLength = app.parentGroup.first().length();
-					}
+				// define the length of the shape incase it hasnt already
+				if (typeof this.shapeLength === 'undefined') {
+					this.shapeLength = app.parentGroup.first().length();
+				}
 
-					app.parentGroup.last().stroke({
-						'color': this.shape.stroke,
-						'width': this.shape.strokeWidth,
-						'dasharray' : this.shapeLength,
-						'dashoffset': this.shapeLength
-					}).animate(this.lineAnimDuration).stroke({
-						'dashoffset': 0
-					});
+				app.parentGroup.last().stroke({
+					'color': this.shape.stroke,
+					'width': this.shape.strokeWidth,
+					'dasharray' : this.shapeLength,
+					'dashoffset': this.shapeLength
+				}).animate(this.lineAnimDuration).stroke({
+					'dashoffset': 0
+				});
 
-					// start a new timer for the next shape
-					this.newShapeTimer = setTimeout(function () {
-						app.animations.b.animationStart();
-					}, this.newAnimDelay);
+				// start a new timer for the next shape
+				this.newShapeTimer = setTimeout(function () {
+					app.animations.b.animationStart();
+				}, this.newAnimDelay);
 			},
 
 			animationStart: function () {
-				if (app.parentGroup.children().length < ( this.horQ * this.verQ) ){
+				if (app.parentGroup.children().length < (this.horQ * this.verQ)) {
 
 					var r = h.genRandom(this.remainingCordinates.length);
 					this.createSquare(this.remainingCordinates[r][0], this.remainingCordinates[r][1]);
 
 					// remove the array element that was just used
-					this.remainingCordinates.splice(r,1);
+					this.remainingCordinates.splice(r, 1);
 				} else {
 					// stop animation if there are no more cordinates left
 					h.stopTimer(this.newShapeTimer);
