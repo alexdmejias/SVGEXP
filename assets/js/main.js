@@ -11,7 +11,7 @@ requirejs.config({
 
 var gApp;
 
-define(['svg', 'app'], function (SVG, App) {
+define(['app'], function (App) {
     // expose a global variable dor easier testing
     gApp = App;
 
