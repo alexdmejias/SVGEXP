@@ -1,5 +1,5 @@
 // TODO: make sure only one timer can be used
-define([], function () {
+define(['../helpers'], function (h) {
 	'use strict';
 	return function (app) {
 		return {
@@ -22,14 +22,14 @@ define([], function () {
 			remainingCordinates: null,
 			newShapeTimer: null,
 
-			stop: function () {
-				window.clearTimeout(this.newShapeTimer);
-			},
-
 			reset: function () {
 				console.log('resetting anim B');
-				this.stop();
+				h.stopTimer(this.newShapeTimer);
 				app.parentGroup.clear();
+			},
+
+			setupCanvas: function () {
+				h.drawWidth();
 			},
 
 			calcMaxQuantity: function () {
@@ -86,12 +86,13 @@ define([], function () {
 					this.remainingCordinates.splice(r,1);
 				} else {
 					// stop animation if there are no more cordinates left
-					this.stop();
+					h.stopTimer(this.newShapeTimer);
 				}
 			},
 
 			// style the parent box and start the whole animation
 			init: function () {
+				this.setupCanvas();
 				this.calcMaxQuantity();
 				this.genGrid(this.horQ, this.verQ);
 				this.animationStart();
