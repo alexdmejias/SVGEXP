@@ -1,4 +1,4 @@
-define([], function () {
+define(['../helpers'], function (h) {
 	'use strict';
 	return function (app) {
 		return {
@@ -20,25 +20,14 @@ define([], function () {
 			reset: function () {
 				console.log('resetting anim C');
 				app.parentGroup.clear();
-				this.stop();
-			},
-
-			stop: function () {
-				window.clearTimeout(this.newShapeTimer);
-			},
-
-			setupCanvas: function () {
-			},
-
-			genRandInRange: function (min, max) {
-				return Math.floor(Math.random() * (max - min + 1)) + min;
+				h.stopTimer(this.newShapeTimer)
 			},
 
 			genShape: function () {
 				// TODO: fix
-				var y = this.genRandInRange(0, app.viewportSize.height),
-					shapeHeight = this.genRandInRange(this.minHeight, this.maxHeight),
-					transitionTime = this.genRandInRange(this.minShapeAnimateDelay, this.maxShapeAnimateDelay);
+				var y = h.genRandom(app.viewportSize.height),
+					shapeHeight = h.genRandom(this.minHeight, this.maxHeight),
+					transitionTime = h.genRandom(this.minShapeAnimateDelay, this.maxShapeAnimateDelay);
 
 				gApp.parentGroup.polygon([
 						[(app.viewportSize.width + this.rightPadding), y],
