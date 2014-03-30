@@ -1,10 +1,10 @@
 // idea: generate points in a clockwise way by providing a min/max range to the generator
-define([], function () {
+define(['../helpers'], function (h) {
 	'use strict';
 	return function (app) {
 		return {
 			// number of random points to generate
-			num_points: 7,
+			numPoints: 7,
 			// placeholder for all the points
 			p: null,
 			// placeholder for all the polygons
@@ -26,16 +26,12 @@ define([], function () {
 				points: []
 			},
 
-			randomGen: function (shapeMaxWidth) {
-				return Math.floor(Math.random() * shapeMaxWidth);
-			},
-
-			pointsMaker: function (num_points) {
+			pointsMaker: function (numPoints) {
 				this.p = [];
-				for(var i = 0; i < num_points; i++) {
-					var x = this.randomGen(this.shapeMaxWidth),
-						y = this.randomGen(this.shapeMaxWidth);
-					this.p.push([x ,y]);
+				for (var i = 0; i < numPoints; i++) {
+					var x = h.genRandom(this.shapeMaxWidth),
+						y = h.genRandom(this.shapeMaxWidth);
+					this.p.push([x, y]);
 				}
 			},
 
@@ -43,16 +39,14 @@ define([], function () {
 				console.log('resetting animation A');
 				app.parentGroup.clear();
 
-				app.draw.style({
-					'width': '100%'
-				});
+				h.drawWidth();
 			},
 
 			drawShape: function () {
-				var color = Math.floor(Math.random() * this.colors.length);
+				var color = h.genRandom(this.colors.length);
 
 				app.parentGroup.add(app.draw.group());
-				this.pointsMaker(this.num_points);
+				this.pointsMaker(this.numPoints);
 
 				// TODO: find a better way to do this
 				this.polygons.push(app.parentGroup.last().polygon([this.p[0], this.p[1], this.p[2], this.p[3]]).fill({'color': this.colors[color], 'opacity': 0.35}));
@@ -62,7 +56,7 @@ define([], function () {
 
 			},
 
-			addShawdow: function() {
+			addShawdow: function () {
 				// set to defaults
 				this.shadow.points = [this.shapeMaxWidth, 0];
 
@@ -100,9 +94,7 @@ define([], function () {
 			},
 
 			setupCanvas: function () {
-				app.draw.style({
-					'width': this.shapeMaxWidth + 'px'
-				});
+				h.drawWidth(this.shapeMaxWidth);
 			},
 
 			init: function () {
