@@ -1,14 +1,14 @@
-define([], function () {
+define(['../helpers'], function (h) {
     'use strict';
-    return function (app, h) {
+    return function (app) {
         return {
             shape: {
                 start: {
                     opacity: 0
                 },
-               end: {
+                end: {
                     opacity: 0.5
-               }
+                }
             },
             gridLineAttrs: {
                 width: 1,
@@ -38,27 +38,24 @@ define([], function () {
                 app.parentGroup.clear();
                 this.currShapeCount = 0;
                 this.gridCordinatesIds = [];
-                h.stop(this.newShapeTimer);
-                app.draw.style({
-                    'width': '100%'
-                });
-                h.drawWidth('100%');
+                h.stopTimer(this.newShapeTimer);
+                h.drawWidth();
             },
 
             setupCanvas: function () {
-                h.drawWidth(app, this.shapeLength * this.gridLength + 'px');
+                h.drawWidth(this.shapeLength * this.gridLength);
             },
 
             genCoordinate: function () {
-                var yRand = h.genRandInRange(0, this.gridLength - 1);
-                var xRand = h.genRandInRange(0, this.gridLength - 1);
-                var angle = h.genRandInRange(0, 3) * 90;
+                var yRand = h.genRandom(this.gridLength - 1);
+                var xRand = h.genRandom(this.gridLength - 1);
+                var angle = h.genRandom(3) * 90;
 
                 return [xRand, yRand, angle];
 
             },
 
-            genId: function(coords) {
+            genId: function (coords) {
                 return coords.join('');
             },
 
@@ -66,10 +63,10 @@ define([], function () {
             genShape: function (coords) {
                 app.parentGroup.polygon([
                     [this.shapeLength * coords[0], coords[1] * this.shapeLength],
-                    [this.shapeLength*(coords[0]+1), coords[1]*this.shapeLength],
-                    [(coords[0]*this.shapeLength)+(this.shapeLength/2),(coords[1]*this.shapeLength)+(this.shapeLength/2)]
+                    [this.shapeLength * (coords[0] + 1), coords[1] * this.shapeLength],
+                    [(coords[0] * this.shapeLength) + (this.shapeLength / 2), (coords[1] * this.shapeLength) + (this.shapeLength / 2)]
                 ])
-                .rotate(coords[2], (coords[0]*this.shapeLength)+(this.shapeLength/2),(coords[1]*this.shapeLength)+(this.shapeLength/2))
+                .rotate(coords[2], (coords[0] * this.shapeLength) + (this.shapeLength / 2), (coords[1] * this.shapeLength) + (this.shapeLength / 2))
                 .attr(this.shape.start)
                 .attr('class', coords.join(''))
                 .animate()
@@ -80,7 +77,8 @@ define([], function () {
             // draw the grid lines
             genGridLines: function () {
                 // group that wiil house grid lines
-                var gridGroup = app.parentGroup.group().attr('clas','grid'),
+                console.log(app);
+                var gridGroup = app.parentGroup.group().attr('clas', 'grid'),
                 // cache of total line length
                     lineLength = this.gridLength * this.shapeLength,
                 // how much time has to pass after the grid finished for the shapes to appear
@@ -92,15 +90,15 @@ define([], function () {
 
                 for (var i = 0; i < this.gridLength + 1; i++) {
                     // horizontal lines
-                    gridGroup.polyline([[0, this.shapeLength * i],[lineLength, this.shapeLength * i ]])
+                    gridGroup.polyline([[0, this.shapeLength * i], [lineLength, this.shapeLength * i ]])
                     .stroke(this.gridLineAttrs);
                     // vertical lines
-                    gridGroup.polyline([[this.shapeLength * i, 0],[this.shapeLength * i, lineLength ]])
+                    gridGroup.polyline([[this.shapeLength * i, 0], [this.shapeLength * i, lineLength ]])
                     .stroke(this.gridLineAttrs);
                 }
 
                 // animate each line
-                gridGroup.each(function(i) {
+                gridGroup.each(function (i) {
                     this.animate(75 * i).stroke({'dashoffset': 0});
                 });
 
@@ -116,7 +114,7 @@ define([], function () {
                 var coords = this.genCoordinate();
                 var id = this.genId(coords);
 
-                if (this.gridCordinatesIds.indexOf(id) == -1) {
+                if (this.gridCordinatesIds.indexOf(id) === -1) {
                     this.genShape(coords);
                     this.gridCordinatesIds.push(id);
                     this.currShapeCount++;
@@ -132,7 +130,7 @@ define([], function () {
                 var self = this;
                 if ((this.currShapeCount) < this.maxShapesTotal) {
                     console.log('this is the generator running');
-                    this.newShapeTimer = window.setTimeout(function() {
+                    this.newShapeTimer = window.setTimeout(function () {
                         self.loop();
                     }, this.newShapeDelay);
                 }
