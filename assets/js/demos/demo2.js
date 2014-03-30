@@ -79,7 +79,7 @@ define(['../helpers'], function (h) {
 			animationStart: function () {
 				if (app.parentGroup.children().length < ( this.horQ * this.verQ) ){
 
-					var r = Math.floor(Math.random() * this.remainingCordinates.length);
+					var r = h.genRandom(this.remainingCordinates.length);
 					this.createSquare(this.remainingCordinates[r][0], this.remainingCordinates[r][1]);
 
 					// remove the array element that was just used
