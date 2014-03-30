@@ -1,20 +1,28 @@
-define([], function () {
+define(function () {
     'use strict';
-    return function () {
-        return {
-            stopTimer: function (timer) {
-                window.clearTimeout(timer);
-            },
+    return {
+        stopTimer: function (timer) {
+            window.clearTimeout(timer);
+        },
 
-            drawWidth: function (app, width) {
-                app.draw.style({
-                    'width': width
-                });
-            },
+        drawWidth: function (width) {
+            if (typeof(width) === 'undefined') {
+                width = '100%';
+            } else {
+                width = width + 'px'
+            }
+            document.getElementById('container').style.width = width;
+        },
 
-            genRandInRange: function (min, max) {
-                return Math.floor(Math.random() * (max - min + 1)) + min;
-            },
-        };
+        genRandom: function (min, max) {
+            if (typeof(max) === 'undefined') {
+                max = min;
+                min = 0;
+            }
+
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+
+        }
     };
+
 });
