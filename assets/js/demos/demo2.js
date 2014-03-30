@@ -13,9 +13,12 @@ define(['../helpers'], function (h) {
 				bottom: 20,
 				left: 20
 			},
-			shape: {
+			shape : {
+				fill: 'transparent'
+			},
+			stroke: {
 				stroke : 'red',
-				strokeWidth: 1,
+				strokeWidth: 1
 			},
 			lineAnimDuration: 500, // line animation duration
 			newAnimDelay: 10, // time between new squares
@@ -29,7 +32,7 @@ define(['../helpers'], function (h) {
 			},
 
 			setupCanvas: function () {
-				h.drawWidth();
+				h.drawWidth(document.documentElement.clientWidth);
 			},
 
 			calcMaxQuantity: function () {
@@ -54,7 +57,8 @@ define(['../helpers'], function (h) {
 				window.clearTimeout(this.newShapeTimer);
 
 				// make the path
-				app.parentGroup.path('M ' + (((this.l * x) + (this.p * x)) + 1) + ' ' + ((this.l * y) + (this.p * y) + 1) + 'H ' + ((this.l * (x + 1)) + (this.p * x)) + ' V ' + ((this.l * (y + 1)) + (this.p * y)) + 'H ' + (((this.l * x) + (this.p * x)) + 1) + 'Z');
+				app.parentGroup.path('M ' + (((this.l * x) + (this.p * x)) + 1) + ' ' + ((this.l * y) + (this.p * y) + 1) + 'H ' + ((this.l * (x + 1)) + (this.p * x)) + ' V ' + ((this.l * (y + 1)) + (this.p * y)) + 'H ' + (((this.l * x) + (this.p * x)) + 1) + 'Z')
+					.style(this.shape);
 
 				// define the length of the shape incase it hasnt already
 				if (typeof this.shapeLength === 'undefined') {
@@ -62,8 +66,8 @@ define(['../helpers'], function (h) {
 				}
 
 				app.parentGroup.last().stroke({
-					'color': this.shape.stroke,
-					'width': this.shape.strokeWidth,
+					'color': this.stroke.stroke,
+					'width': this.stroke.strokeWidth,
 					'dasharray' : this.shapeLength,
 					'dashoffset': this.shapeLength
 				}).animate(this.lineAnimDuration).stroke({
@@ -79,7 +83,7 @@ define(['../helpers'], function (h) {
 			animationStart: function () {
 				if (app.parentGroup.children().length < (this.horQ * this.verQ)) {
 
-					var r = h.genRandom(this.remainingCordinates.length);
+					var r = h.genRandom(this.remainingCordinates.length - 1);
 					this.createSquare(this.remainingCordinates[r][0], this.remainingCordinates[r][1]);
 
 					// remove the array element that was just used
