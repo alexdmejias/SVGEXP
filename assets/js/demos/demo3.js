@@ -20,7 +20,7 @@ define(['../helpers'], function (h) {
 			reset: function () {
 				console.log('resetting anim C');
 				app.parentGroup.clear();
-				h.stopTimer(this.newShapeTimer)
+				h.stopTimer(this.newShapeTimer);
 			},
 
 			genShape: function () {
@@ -32,14 +32,14 @@ define(['../helpers'], function (h) {
 				gApp.parentGroup.polygon([
 						[(app.viewportSize.width + this.rightPadding), y],
 						[(this.rightPadding + this.maxWidth + app.viewportSize.width), y],
-						[(this.rightPadding + this.maxWidth + this.widthOffset + app.viewportSize.width) , (y+shapeHeight)],
+						[(this.rightPadding + this.maxWidth + this.widthOffset + app.viewportSize.width), (y + shapeHeight)],
 						[(this.rightPadding + this.widthOffset + app.viewportSize.width), (y + shapeHeight)]
 					])
 					.attr(this.shape)
 					.animate(transitionTime)
 					.opacity(1)
-					.x(-(this.maxWidth + this.widthOffset + this.leftPadding) )
-					.after( function () {
+					.x(-(this.maxWidth + this.widthOffset + this.leftPadding))
+					.after(function () {
 						this.remove();
 					});
 			},
