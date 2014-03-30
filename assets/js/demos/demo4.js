@@ -129,7 +129,6 @@ define(['../helpers'], function (h) {
             generator: function () {
                 var self = this;
                 if ((this.currShapeCount) < this.maxShapesTotal) {
-                    console.log('this is the generator running');
                     this.newShapeTimer = window.setTimeout(function () {
                         self.loop();
                     }, this.newShapeDelay);

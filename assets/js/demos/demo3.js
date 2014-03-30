@@ -23,6 +23,10 @@ define(['../helpers'], function (h) {
 				h.stopTimer(this.newShapeTimer);
 			},
 
+			setupCanvas: function () {
+				h.drawWidth();
+			},
+
 			genShape: function () {
 				// TODO: fix
 				var y = h.genRandom(app.viewportSize.height),
