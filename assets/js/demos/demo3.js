@@ -33,7 +33,7 @@ define(['../helpers'], function (h) {
 					shapeHeight = h.genRandom(this.minHeight, this.maxHeight),
 					transitionTime = h.genRandom(this.minShapeAnimateDelay, this.maxShapeAnimateDelay);
 
-				gApp.parentGroup.polygon([
+				app.parentGroup.polygon([
 						[(app.viewportSize.width + this.rightPadding), y],
 						[(this.rightPadding + this.maxWidth + app.viewportSize.width), y],
 						[(this.rightPadding + this.maxWidth + this.widthOffset + app.viewportSize.width), (y + shapeHeight)],
