@@ -16,7 +16,7 @@ define(['svg', 'events', 'colors', 'demos/demo1', 'demos/demo2', 'demos/demo3', 
 			App.container.style.width = App.viewportSize.width + 'px';
 			App.container.style.height = App.viewportSize.height - App.header.clientHeight - 4 + 'px';
 
-			App.draw = SVG('container').fixSubPixelOffset(),
+			App.draw = SVG('container').fixSubPixelOffset();
 			App.parentGroup = App.draw.group();
 			App.animations.a = demo1(App);
 			App.animations.b = demo2(App);

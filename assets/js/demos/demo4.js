@@ -79,14 +79,13 @@ define(['../helpers'], function (h) {
                 // .attr(this.shape.end);
                 .style({
                     opacity: 1
-                })
+                });
 
             },
 
             // draw the grid lines
             genGridLines: function () {
                 // group that wiil house grid lines
-                console.log(app);
                 var gridGroup = app.parentGroup.group().attr('clas', 'grid'),
                 // cache of total line length
                     lineLength = this.gridLength * this.shapeLength,

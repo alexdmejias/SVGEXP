@@ -9,9 +9,10 @@ define(['../helpers'], function (h) {
 			p: null,
 			// placeholder for all the polygons
 			polygons: [],
+			// max width of the overall shape
 			shapeMaxWidth: 500,
 			// possible colors
-			colors: ['red', 'green', 'blue', 'black'],
+			colors: app.colorScheme,
 			shadow: {
 				style: {
 					'opacity': 0.05,
@@ -43,7 +44,7 @@ define(['../helpers'], function (h) {
 			},
 
 			drawShape: function () {
-				var color = h.genRandom(this.colors.length);
+				var color = h.genRandom(this.colors.length - 1);
 
 				app.parentGroup.add(app.draw.group());
 				this.pointsMaker(this.numPoints);
