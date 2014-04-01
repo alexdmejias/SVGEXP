@@ -43,9 +43,16 @@ define([], function () {
 			return this;
 		},
 
-		show: function () {
+		show: function (template) {
 			this.init();
+
+			this.clear();
+			if (typeof(template) !== 'undefined') {
+				this.fgElem.innerHTML = document.getElementById(template + '-template').innerHTML;
+			}
+
 			this.bgElem.className = 'showing';
+
 			return this;
 		},
 

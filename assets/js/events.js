@@ -36,8 +36,7 @@ define([], function () {
 				var infoButton = document.getElementById('info');
 				infoButton.addEventListener('click', function (e) {
 					e.preventDefault();
-					app.modal.show().text(['Please excuse the apperance while I keep working on this project.',
-						'What is this? A series of SVG elements, please look at the GitHub repo to find what else is coming to this project']);
+					app.modal.show('more-info');
 				});
 			},
 
