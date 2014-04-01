@@ -1,5 +1,5 @@
-define(['svg', 'events', 'demos/demo1', 'demos/demo2', 'demos/demo3', 'demos/demo4'],
-	function (SVG, events, demo1, demo2, demo3, demo4) {
+define(['svg', 'events', 'colors', 'demos/demo1', 'demos/demo2', 'demos/demo3', 'demos/demo4'],
+	function (SVG, events, colors, demo1, demo2, demo3, demo4) {
 	'use strict';
 
 	var App = {
@@ -10,6 +10,7 @@ define(['svg', 'events', 'demos/demo1', 'demos/demo2', 'demos/demo3', 'demos/dem
 		priorAnimation: '',
 		animations: {},
 		viewportSize: {},
+		colorScheme: colors.colorSchemes[0],
 
 		setupNameSpaces: function () {
 			App.container.style.width = App.viewportSize.width + 'px';
@@ -27,7 +28,7 @@ define(['svg', 'events', 'demos/demo1', 'demos/demo2', 'demos/demo3', 'demos/dem
 			events(App).init();
 			App.setupNameSpaces();
 
-			App.currentAnimation = 'b';
+			App.currentAnimation = 'd';
 			App.animations[App.currentAnimation].init();
 		}
 

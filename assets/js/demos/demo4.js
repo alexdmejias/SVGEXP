@@ -2,6 +2,7 @@ define(['../helpers'], function (h) {
     'use strict';
     return function (app) {
         return {
+            colors: app.colorScheme,
             shape: {
                 start: {
                     opacity: 0
@@ -15,7 +16,7 @@ define(['../helpers'], function (h) {
                 color: '#bbb'
             },
             // amount of time between new shapes being generated
-            newShapeDelay: 200,
+            newShapeDelay: 50,
             // placeholder for the timer var
             newShapeTimer: null,
             // the length of each shape
@@ -61,16 +62,24 @@ define(['../helpers'], function (h) {
 
             // draw one of the shapes using one of the grid coordinates
             genShape: function (coords) {
+                // var colors= ['green', 'red', 'black'];
                 app.parentGroup.polygon([
                     [this.shapeLength * coords[0], coords[1] * this.shapeLength],
                     [this.shapeLength * (coords[0] + 1), coords[1] * this.shapeLength],
                     [(coords[0] * this.shapeLength) + (this.shapeLength / 2), (coords[1] * this.shapeLength) + (this.shapeLength / 2)]
                 ])
                 .rotate(coords[2], (coords[0] * this.shapeLength) + (this.shapeLength / 2), (coords[1] * this.shapeLength) + (this.shapeLength / 2))
-                .attr(this.shape.start)
+                // .attr(this.shape.start)
+                .style({
+                    fill: this.colors[h.genRandom(4)],
+                    opacity: 0
+                })
                 .attr('class', coords.join(''))
                 .animate()
-                .attr(this.shape.end);
+                // .attr(this.shape.end);
+                .style({
+                    opacity: 1
+                })
 
             },
 
