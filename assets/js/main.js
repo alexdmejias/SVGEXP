@@ -9,11 +9,11 @@ requirejs.config({
     }
 });
 
-var gApp;
+var app;
 
 define(['app'], function (App) {
-    // expose a global variable dor easier testing
-    gApp = App;
+    // expose a global variable for easier debugging
+    app = App;
 
     App.appinit();
 });
