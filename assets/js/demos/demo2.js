@@ -17,9 +17,9 @@ define(['../helpers'], function (h) {
 				fill: 'transparent'
 			},
 			stroke: {
-				stroke : 'red',
 				strokeWidth: 1
 			},
+			colors: app.colorScheme,
 			lineAnimDuration: 500, // line animation duration
 			newAnimDelay: 10, // time between new squares
 			remainingCordinates: null,
@@ -36,8 +36,8 @@ define(['../helpers'], function (h) {
 			},
 
 			calcMaxQuantity: function () {
-				this.horQ = Math.floor(parseInt(app.container.style.width) / (this.p + this.l));
-				this.verQ = Math.floor(parseInt(app.container.style.height) / (this.p + this.l));
+				this.horQ = Math.floor((parseInt(app.container.style.width) - 50) / (this.p + this.l));
+				this.verQ = Math.floor((parseInt(app.container.style.height) - 50) / (this.p + this.l));
 			},
 
 			// generates an array of cordinates for the loop to pick from
@@ -65,13 +65,25 @@ define(['../helpers'], function (h) {
 					this.shapeLength = app.parentGroup.first().length();
 				}
 
-				app.parentGroup.last().stroke({
-					'color': this.stroke.stroke,
-					'width': this.stroke.strokeWidth,
-					'dasharray' : this.shapeLength,
-					'dashoffset': this.shapeLength
-				}).animate(this.lineAnimDuration).stroke({
-					'dashoffset': 0
+				var color = h.genRandom(this.colors.length - 1);
+
+				app.parentGroup.last()
+				.style({
+					'fill': this.colors[color],
+					'fill-opacity': 0,
+					'stroke': this.colors[color],
+					'stroke-width': this.stroke.strokeWidth,
+					'stroke-dasharray' : this.shapeLength,
+					'stroke-dashoffset': this.shapeLength,
+				}).animate(this.lineAnimDuration)
+				.style({
+					'stroke-dashoffset': 0,
+				})
+				.after(function () {
+					this.animate(this.lineAnimDuration)
+					.style({
+						'fill-opacity': 1
+					});
 				});
 
 				// start a new timer for the next shape
