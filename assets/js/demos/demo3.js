@@ -3,9 +3,9 @@ define(['../helpers'], function (h) {
 	return function (app) {
 		return {
 			shape: {
-				fill: 'red',
-				opacity: 0.25
+				opacity: 0.55
 			},
+			colors: app.colorScheme,
 			maxWidth: 400,
 			widthOffset: 100,
 			minHeight: 50,
@@ -31,7 +31,9 @@ define(['../helpers'], function (h) {
 				// TODO: fix
 				var y = h.genRandom(app.viewportSize.height),
 					shapeHeight = h.genRandom(this.minHeight, this.maxHeight),
-					transitionTime = h.genRandom(this.minShapeAnimateDelay, this.maxShapeAnimateDelay);
+					transitionTime = h.genRandom(this.minShapeAnimateDelay, this.maxShapeAnimateDelay),
+					color = h.genRandom(this.colors.length - 1);
+
 
 				app.parentGroup.polygon([
 						[(app.viewportSize.width + this.rightPadding), y],
@@ -39,7 +41,8 @@ define(['../helpers'], function (h) {
 						[(this.rightPadding + this.maxWidth + this.widthOffset + app.viewportSize.width), (y + shapeHeight)],
 						[(this.rightPadding + this.widthOffset + app.viewportSize.width), (y + shapeHeight)]
 					])
-					.attr(this.shape)
+					.style(this.shape)
+					.style('fill', this.colors[color])
 					.animate(transitionTime)
 					.opacity(1)
 					.x(-(this.maxWidth + this.widthOffset + this.leftPadding))
