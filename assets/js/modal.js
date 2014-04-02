@@ -7,19 +7,21 @@ define([], function () {
 		fgElem: null,
 		create: function () {
 			this.bgElem = document.createElement('div');
-			this.bgElem.setAttribute('id', 'modalBackground');
+			this.bgElem.setAttribute('class', 'modal');
 			document.getElementsByTagName('body')[0].appendChild(this.bgElem);
 
 			this.fgElem = document.createElement('div');
-			this.fgElem.setAttribute('id', 'modalForeground');
-			document.getElementById('modalBackground').appendChild(this.fgElem);
+			this.fgElem.setAttribute('class', 'modalForeground');
+
+			this.bgElem.appendChild(this.fgElem);
 
 		},
 
 		events: function () {
 			var elem = this.bgElem;
 			var hide = function () {
-				elem.className = '';
+				elem.className = 'modal';
+				document.getElementsByClassName('wrap')[0].className = 'wrap';
 			};
 
 			this.bgElem.addEventListener('click', hide);
@@ -51,7 +53,8 @@ define([], function () {
 				this.fgElem.innerHTML = document.getElementById(template + '-template').innerHTML;
 			}
 
-			this.bgElem.className = 'showing';
+			this.bgElem.className = 'modal showing';
+			document.getElementsByClassName('wrap')[0].className = 'wrap blurry';
 
 			return this;
 		},
