@@ -14,3 +14,20 @@
 * B: center animation
 * D: center animation
 * D: Bug where animation restarts and persists when switching to a different demo
+* D: put polygons in group
+* D: use the same polygon but just rotate it/move it/ change color
+* E: center
+* fix reset button
+* custom Google Analytics events
+
+##controls
+* save shape
+* A: change colors
+* B: repeat
+* B: speed
+* B: box/padding size
+* C: speed
+* C: num. of shapes
+* D: num. of shapes
+* D: speed
+* D: grid on/off
