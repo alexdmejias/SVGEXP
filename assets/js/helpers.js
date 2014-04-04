@@ -3,17 +3,19 @@ define(function () {
     return {
         stopTimer: function (timer) {
             window.clearTimeout(timer);
+            console.info('helper:', 'stopped a timer with an id of', timer);
         },
 
         // set the with of the parent element. If no width is provided
         // it sets the with too 100%, else to the given parameter in pixels
         drawWidth: function (width, height) {
             var elem = document.getElementById('SvgjsSvg1000'),
-                width = width + 'px' || '100%',
-                height = height + 'px' || elem.clientHeight;
+                width = width ? width + 'px' : '100%',
+                height = height ? height + 'px' : elem.parentNode.clientHeight;
 
             elem.style.width = width;
             elem.style.height = height;
+            console.info('helper:', 'setting witdth and height to', width, height);
         },
 
         // generate a random integer between the provided parameters
@@ -24,9 +26,7 @@ define(function () {
                 max = min;
                 min = 0;
             }
-
             return Math.floor(Math.random() * (max - min + 1)) + min;
-
         }
     };
 
