@@ -27,7 +27,7 @@ define(['../helpers'], function (h) {
 				points: []
 			},
 			setupCanvas: function () {
-				h.drawWidth(this.shapeMaxWidth);
+				h.drawWidth(this.shapeMaxWidth, this.shapeMaxWidth + this.shadow.height);
 			},
 
 			reset: function () {

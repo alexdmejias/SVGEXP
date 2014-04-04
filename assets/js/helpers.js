@@ -7,13 +7,13 @@ define(function () {
 
         // set the with of the parent element. If no width is provided
         // it sets the with too 100%, else to the given parameter in pixels
-        drawWidth: function (width) {
-            if (typeof(width) === 'undefined') {
-                width = '100%';
-            } else {
-                width = width + 'px'
-            }
-            document.getElementById('container').style.width = width;
+        drawWidth: function (width, height) {
+            var elem = document.getElementById('SvgjsSvg1000'),
+                width = width + 'px' || '100%',
+                height = height + 'px' || elem.clientHeight;
+
+            elem.style.width = width;
+            elem.style.height = height;
         },
 
         // generate a random integer between the provided parameters
