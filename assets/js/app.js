@@ -6,6 +6,7 @@ define(['svg', 'events', 'colors', 'modal', 'demos/demo1', 'demos/demo2', 'demos
 		header: document.getElementsByTagName('header')[0],
 		buttons: document.getElementById('demos'),
 		container: document.getElementById('container'),
+		wrap: document.getElementsByClassName('wrap')[0],
 		currentAnimation : '',
 		priorAnimation: '',
 		animations: {},
@@ -19,6 +20,7 @@ define(['svg', 'events', 'colors', 'modal', 'demos/demo1', 'demos/demo2', 'demos
 
 			App.draw = SVG('container').fixSubPixelOffset();
 			App.parentGroup = App.draw.group();
+			App.parentGroup = App.draw.group().attr('class', 'parentGroup');
 			App.animations.a = demo1(App);
 			App.animations.b = demo2(App);
 			App.animations.c = demo3(App);

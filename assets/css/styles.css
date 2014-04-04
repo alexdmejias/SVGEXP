@@ -336,21 +336,21 @@ a, a:visited {
   text-transform: uppercase;
   letter-spacing: 1px; }
 
+.wrap.blurry {
+  -webkit-filter: blur(2px); }
 
 .top a {
   padding: 3px 10px;
   display: inline-block;
   width: 49%; }
-
-.top a:last-child {
-  padding: 0;
-  text-align: right; }
+  .top a:last-child {
+    padding: 0;
+    text-align: right; }
 
 nav {
-  background: #000;
-  background: rgba(0, 0, 0, 0.1);
+  background: #BCBBC0;
   padding: 50px 10px;
-  border-bottom: 5px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 5px solid #A8A8AB;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -364,18 +364,30 @@ nav {
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between; }
-
-nav h1 {
-  margin: 0; }
-
-nav a {
-  border: 2px solid white;
-  padding: 5px 5px 3px;
-  display: inline-block; }
-
-nav a:hover {
-  border-color: black;
-  color: black; }
+  nav h1 {
+    margin: 0; }
+    nav h1 a {
+      font-size: 0.35em;
+      font-weight: normal; }
+  nav a {
+    border: 2px solid white;
+    padding: 5px 5px 3px;
+    display: inline-block;
+    position: relative;
+    /* 		&:before, &:after {
+			position: absolute;
+			content: '';
+			border: 1px solid #BCBBC0;
+			width: 90%;
+			left: 5%;
+			top: -2px;
+		}
+		&:after {
+			top: 100%;
+		} */ }
+    nav a:hover {
+      border-color: black;
+      color: black; }
 
 #container, svg {
   display: block;
@@ -384,5 +396,30 @@ nav a:hover {
 
 .b path {
   fill: none; }
+
+#modalBackground, .modal {
+  background: rgba(0, 0, 0, 0.5);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
+  display: none;
+  text-align: center; }
+  #modalBackground:before, .modal:before {
+    height: 100%;
+    content: '';
+    vertical-align: middle;
+    display: inline-block; }
+  #modalBackground.showing, .modal.showing {
+    display: block; }
+  #modalBackground div, .modal div {
+    width: 50%;
+    vertical-align: middle;
+    display: inline-block;
+    background: rgba(0, 0, 0, 0.8);
+    color: #ddd;
+    border-radius: 2px;
+    padding: 15px; }
 
 /*# sourceMappingURL=styles.css.map */
