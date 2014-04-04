@@ -19,9 +19,11 @@
 * E: center
 * fix reset button
 * custom Google Analytics events
+* decouple
 
 ##controls
 * save shape
+* change color scheme
 * A: change colors
 * B: repeat
 * B: speed
@@ -31,3 +33,4 @@
 * D: num. of shapes
 * D: speed
 * D: grid on/off
+* E: what type of shape: square, circle, hexagon
