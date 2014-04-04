@@ -9,11 +9,11 @@ requirejs.config({
     }
 });
 
-var app;
+var x;
 
 define(['app'], function (App) {
     // expose a global variable for easier debugging
-    app = App;
+    x = App;
 
     App.appinit();
 });

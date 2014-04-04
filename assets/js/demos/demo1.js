@@ -26,6 +26,16 @@ define(['../helpers'], function (h) {
 				yPos: 500,
 				points: []
 			},
+			setupCanvas: function () {
+				h.drawWidth(this.shapeMaxWidth);
+			},
+
+			reset: function () {
+				console.log('resetting animation A');
+				app.parentGroup.clear();
+
+				h.drawWidth();
+			},
 
 			pointsMaker: function (numPoints) {
 				this.p = [];
@@ -36,14 +46,7 @@ define(['../helpers'], function (h) {
 				}
 			},
 
-			reset: function () {
-				console.log('resetting animation A');
-				app.parentGroup.clear();
-
-				h.drawWidth();
-			},
-
-			drawShape: function () {
+			render: function () {
 				var color = h.genRandom(this.colors.length - 1);
 
 				app.parentGroup.add(app.draw.group());
@@ -94,10 +97,6 @@ define(['../helpers'], function (h) {
 				}
 			},
 
-			setupCanvas: function () {
-				h.drawWidth(this.shapeMaxWidth);
-			},
-
 			init: function () {
 				this.setupCanvas();
 
@@ -107,7 +106,7 @@ define(['../helpers'], function (h) {
 				// clear the parent group
 				app.parentGroup.clear();
 
-				this.drawShape();
+				this.render();
 				this.addShawdow();
 			}
 		};
