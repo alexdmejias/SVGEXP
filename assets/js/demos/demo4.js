@@ -1,5 +1,5 @@
+'use strict';
 define(['../helpers'], function (h) {
-    'use strict';
     return function (app) {
         return {
             colors: app.colorScheme,
@@ -40,11 +40,12 @@ define(['../helpers'], function (h) {
                 this.currShapeCount = 0;
                 this.gridCordinatesIds = [];
                 h.stopTimer(this.newShapeTimer);
-                h.drawWidth();
             },
 
             setupCanvas: function () {
-                h.drawWidth(this.shapeLength * this.gridLength);
+                var width = this.shapeLength * this.gridLength,
+                    height = width;
+                h.drawWidth(width, height);
             },
 
             genCoordinate: function () {
