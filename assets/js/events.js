@@ -14,20 +14,48 @@ define([], function () {
 			},
 
 			demoSwitch: function () {
-				app.buttons.addEventListener('click', function (e) {
+				var self = this;
+
+				app.demoButtons.addEventListener('click', function (e) {
 					if (e.target.tagName === 'BUTTON') {
 
 						var currentDemo = e.target.getAttribute('data-demo');
 
 						app.priorAnimation = app.currentAnimation;
+						app.currentAnimation = currentDemo;
 
-						app.animations[app.priorAnimation].reset();
+						self.resetDemo();
 
 						document.getElementsByTagName('body')[0].className = currentDemo;
 
-						app.animations[currentDemo].init();
-						app.currentAnimation = currentDemo;
+					}
+				});
+			},
 
+			resetDemo: function () {
+				if (app.animations[app.priorAnimation].hasOwnProperty('reset')) {
+					app.animations[app.priorAnimation].reset();
+				} else {
+					app.animations.demo.reset();
+				}
+
+				app.animations[app.currentAnimation].init();
+			},
+
+			controls: function () {
+				var self = this;
+				app.controlButtons.addEventListener('click', function (e) {
+					if (e.target.tagName === 'BUTTON') {
+						var action = e.target.getAttribute('data-action');
+
+						switch (action) {
+							case 'controls':
+								console.log('will show controls at some point');
+								break;
+							default:
+								console.log('will activate a reset method', this);
+								self.resetDemo();
+						}
 					}
 				});
 			},
@@ -43,6 +71,7 @@ define([], function () {
 			init : function () {
 				this.getViewportSize();
 				this.demoSwitch();
+				this.controls();
 				this.moreInfo();
 			}
 		};
