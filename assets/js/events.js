@@ -42,6 +42,20 @@ define([], function () {
 				app.animations[app.currentAnimation].init();
 			},
 
+			saveDemo: function () {
+				app.modal.show('save-image');
+				var content = btoa(app.container.innerHTML),
+					innerModal = document.getElementsByClassName('modalForeground')[0],
+					image = innerModal.getElementsByTagName('img')[0];
+
+				image.setAttribute('src', 'data:image/svg+xml;base64,' + content);
+
+			},
+
+			showControls: function () {
+				app.modal.show('more-controls');
+			},
+
 			controls: function () {
 				var self = this;
 				app.controlButtons.addEventListener('click', function (e) {
@@ -51,9 +65,13 @@ define([], function () {
 						switch (action) {
 							case 'controls':
 								console.log('will show controls at some point');
+								self.showControls();
+								break;
+							case 'save':
+								console.log('saving demo');
+								self.saveDemo();
 								break;
 							default:
-								console.log('will activate a reset method', this);
 								self.resetDemo();
 						}
 					}
@@ -65,7 +83,7 @@ define([], function () {
 				infoButton.addEventListener('click', function (e) {
 					e.preventDefault();
 					app.modal.show('more-info');
-				});
+				}, true);
 			},
 
 			init : function () {

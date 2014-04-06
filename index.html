@@ -27,6 +27,7 @@
                 </div>
                 <div class="controls">
                     <button data-action="reset">RESET</button>
+                    <button data-action="save">SAVE</button>
                     <button data-action="controls">CONTROLS</button>
                 </div>
             </nav>
@@ -40,6 +41,25 @@
     <script id="more-info-template" type="text/x-template">
         <p>Please excuse the appearance while I keep working on this project.</p>
         <p>What is this? A series of SVG experiments, please look at the GitHub repo to find what else is coming to this project</p>
+    </script>
+
+    <script id="save-image-template" type="text/x-template">
+        <img src="">
+        <p>Right-click the image to save it</p>
+    </script>
+
+    <script id="more-controls-template" type="text/x-template">
+        <div class="general">
+            <label for="colorScheme">Color Scheme</label>
+            <select name="colorScheme">
+                <option value="0">one</option>
+                <option value="1">two</option>
+            </select>
+        </div>
+        <hr>
+        <div class="demoSpecific">
+
+        </div>
     </script>
 
     <script>
