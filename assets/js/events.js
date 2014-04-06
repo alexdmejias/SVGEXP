@@ -61,7 +61,7 @@ define([], function () {
 			},
 
 			moreInfo: function () {
-				var infoButton = document.getElementById('info');
+				var infoButton = document.getElementsByClassName('moreInfo')[0];
 				infoButton.addEventListener('click', function (e) {
 					e.preventDefault();
 					app.modal.show('more-info');
