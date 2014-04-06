@@ -77,6 +77,6 @@ module.exports = function (grunt) {
 
 	});
 
-	grunt.registerTask('build', ['sass', 'autoprefixer', 'concat']);
+	grunt.registerTask('build', ['sass', 'autoprefixer']);
 	grunt.registerTask('default', ['build', 'connect', 'watch']);
 };
