@@ -19,9 +19,13 @@ define([], function () {
 
 		events: function () {
 			var elem = this.bgElem;
-			var hide = function () {
-				elem.className = 'modal';
-				document.getElementsByClassName('wrap')[0].className = 'wrap';
+			var hide = function (e) {
+				console.log(e);
+				console.log(e.target.className);
+				if (e.target.className === 'modal showing') {
+					elem.className = 'modal';
+					document.getElementsByClassName('wrap')[0].className = 'wrap';
+				}
 			};
 
 			this.bgElem.addEventListener('click', hide);
