@@ -15,7 +15,7 @@ define([], function () {
 
 			demoSwitch: function () {
 				app.buttons.addEventListener('click', function (e) {
-					if (e.target.tagName === 'A') {
+					if (e.target.tagName === 'BUTTON') {
 
 						var currentDemo = e.target.getAttribute('data-demo');
 

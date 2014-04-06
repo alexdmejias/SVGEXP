@@ -4,7 +4,7 @@ define(['svg', 'events', 'colors', 'modal', 'demos/demo1', 'demos/demo2', 'demos
 
 	var App = {
 		header: document.getElementsByTagName('header')[0],
-		buttons: document.getElementById('demos'),
+		buttons: document.getElementsByClassName('demos')[0],
 		container: document.getElementById('container'),
 		wrap: document.getElementsByClassName('wrap')[0],
 		currentAnimation : '',
