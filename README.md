@@ -4,15 +4,14 @@
 * style header moar
 * add title/desc
 * Modal: style more
-* A: ability to save shape
 * A: More programatic way to generating the shapes
 * B: center animation
 * D: Bug where animation restarts and persists when switching to a different demo
 * D: put polygons in group
 * D: use the same polygon but just rotate it/move it/ change color
-* fix reset button
 * custom Google Analytics events
 * decouple
+* ~~fix reset button~~
 * ~~change title~~
 * ~~grunt~~
 * ~~add link to github repo~~
