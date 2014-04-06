@@ -2,8 +2,6 @@
 * resize events
 * add requirejs grunt task
 * style header moar
-* add title/desc
-* Modal: style more
 * A: More programatic way to generating the shapes
 * B: center animation
 * D: Bug where animation restarts and persists when switching to a different demo
@@ -11,6 +9,7 @@
 * D: use the same polygon but just rotate it/move it/ change color
 * custom Google Analytics events
 * decouple
+* fix 'save' issues
 * ~~fix reset button~~
 * ~~change title~~
 * ~~grunt~~
@@ -20,7 +19,7 @@
 * ~~E: center~~
 
 ##controls
-* save shape
+* ~~save shape~~
 * change color scheme
 * A: change colors
 * B: repeat
