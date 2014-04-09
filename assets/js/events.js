@@ -26,6 +26,8 @@ define([], function () {
 
 						self.resetDemo();
 
+						ga('send', 'event', 'category', 'switchDemo', currentDemo);
+
 						document.getElementsByTagName('body')[0].className = currentDemo;
 
 					}
@@ -40,6 +42,8 @@ define([], function () {
 				}
 
 				app.animations[app.currentAnimation].init();
+
+				ga('send', 'event', 'category', 'resetDemo', app.currentAnimation);
 			},
 
 			saveDemo: function () {
@@ -49,6 +53,7 @@ define([], function () {
 					image = innerModal.getElementsByTagName('img')[0];
 
 				image.setAttribute('src', 'data:image/svg+xml;base64,' + content);
+				ga('send', 'event', 'category', 'saveDemo', currentDemo);
 
 			},
 
