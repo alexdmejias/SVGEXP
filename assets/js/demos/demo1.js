@@ -33,8 +33,6 @@ define(['../helpers'], function (h) {
 			reset: function () {
 				console.log('resetting animation A');
 				app.parentGroup.clear();
-
-				h.drawWidth();
 			},
 
 			pointsMaker: function (numPoints) {
@@ -85,7 +83,6 @@ define(['../helpers'], function (h) {
 					var defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs'),
 						filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter'),
 						blur = document.createElementNS('http://www.w3.org/2000/svg', 'feGaussianBlur');
-
 
 					filter.setAttribute('id', 'shadow');
 					filter.setAttribute('height', this.shadow.blur.height);

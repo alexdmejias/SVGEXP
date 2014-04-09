@@ -18,7 +18,7 @@ define(['../helpers'], function (h) {
             // amount of time between new shapes being generated
             newShapeDelay: 50,
             // placeholder for the timer var
-            newShapeTimer: null,
+            globalTimer: null,
             // the length of each shape
             shapeLength: 50,
             // how many boxes per grid side
@@ -39,7 +39,7 @@ define(['../helpers'], function (h) {
                 app.parentGroup.clear();
                 this.currShapeCount = 0;
                 this.gridCordinatesIds = [];
-                h.stopTimer(this.newShapeTimer);
+                h.stopTimer(this.globalTimer);
             },
 
             setupCanvas: function () {
@@ -138,7 +138,7 @@ define(['../helpers'], function (h) {
             generator: function () {
                 var self = this;
                 if ((this.currShapeCount) < this.maxShapesTotal) {
-                    this.newShapeTimer = window.setTimeout(function () {
+                    this.globalTimer = window.setTimeout(function () {
                         self.loop();
                     }, this.newShapeDelay);
                 }

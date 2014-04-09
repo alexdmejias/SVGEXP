@@ -12,7 +12,7 @@ define(['../helpers'], function (h) {
 			maxHeight: 100,
 			leftPadding: 50,
 			rightPadding: 50,
-			newShapeTimer: null,
+			globalTimer: null,
 			newShapeDelay: 250,
 			minShapeAnimateDelay: 1000,
 			maxShapeAnimateDelay: 3000,
@@ -20,7 +20,7 @@ define(['../helpers'], function (h) {
 			reset: function () {
 				console.log('resetting anim C');
 				app.parentGroup.clear();
-				h.stopTimer(this.newShapeTimer);
+				h.stopTimer(this.globalTimer);
 			},
 
 			setupCanvas: function () {
@@ -53,7 +53,7 @@ define(['../helpers'], function (h) {
 
 			generator: function () {
 				var self = this;
-				this.newShapeTimer = window.setTimeout(function () {
+				this.globalTimer = window.setTimeout(function () {
 					self.genShape();
 					self.generator();
 				}, this.newShapeDelay);
