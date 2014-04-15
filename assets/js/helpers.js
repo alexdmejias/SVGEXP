@@ -8,7 +8,7 @@ define(function () {
 
         // set the with of the parent element. If no width is provided
         // it sets the with too 100%, else to the given parameter in pixels
-        drawWidth: function (width, height) {
+        setDrawWidth: function (width, height) {
             var elem = document.getElementById('SvgjsSvg1000'),
                 width = width ? width + 'px' : '100%',
                 height = height ? height + 'px' : elem.parentNode.clientHeight;
