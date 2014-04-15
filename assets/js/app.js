@@ -1,50 +1,82 @@
-define(['svg', 'events', 'colors', 'modal', 'demos/demo1', 'demos/demo2', 'demos/demo3', 'demos/demo4', 'demos/demo5'],
-	function (SVG, events, colors, modal, demo1, demo2, demo3, demo4, demo5) {
+define(['svg', 'events', 'colors', 'header', 'eventsManager', 'helpers'],
+	function (SVG, events, colors, header, E, h) {
 	'use strict';
 
 	var App = {
-		header: document.getElementsByTagName('header')[0],
-		container: document.getElementById('container'),
-		wrap: document.getElementsByClassName('wrap')[0],
-		demoButtons: document.getElementsByClassName('demos')[0],
-		controlButtons: document.getElementsByClassName('controls')[0],
+		sel: {
+			header: document.getElementsByTagName('header')[0],
+			container: document.getElementById('container'),
+			wrap: document.getElementsByClassName('wrap')[0],
+			demoButtons: document.getElementsByClassName('demos')[0],
+			controlButtons: document.getElementsByClassName('controls')[0],
+		},
 		currentAnimation : '',
 		priorAnimation: '',
-		defaultAnimation: 'b',
+		defaultAnimation: 'Four',
 		animations: {},
 		viewportSize: {},
-		numOfColorSchemes: colors.colorSchemes.length,
-		modal: modal,
+		numOfColorSchemes: colors.length,
+		debug: true,
+		// modal: modal,
 
 		setup: function () {
-			App.container.style.width = App.viewportSize.width + 'px';
-			App.container.style.height = App.viewportSize.height - App.header.clientHeight - 4 + 'px';
+			App.viewportSize.width = document.documentElement.clientWidth;
+			App.viewportSize.height = document.documentElement.clientHeight;
 
-			App.colorScheme = colors.colorSchemes[Math.floor(Math.random() * App.numOfColorSchemes)];
+			App.sel.container.style.width = App.viewportSize.width + 'px';
+			App.sel.container.style.height = App.viewportSize.height - App.sel.header.clientHeight - 4 + 'px';
+
+			App.colorScheme = colors[Math.floor(Math.random() * App.numOfColorSchemes)];
 
 			App.draw = SVG('container').fixSubPixelOffset();
 			App.parentGroup = App.draw.group().attr('class', 'parentGroup');
-			App.animations.a = demo1(App);
-			App.animations.b = demo2(App);
-			App.animations.c = demo3(App);
-			App.animations.d = demo4(App);
-			App.animations.e = demo5(App);
 
-			/*console.log(require.s.contexts._.defined);
-			for (key in require.s.contexts._.defined) {
-				if (key.indexOf('demos/') === 0) {
-					App.animations.
-				}
-			};*/
-
-		},
-		appinit: function () {
-			events(App).init();
-			App.setup();
-
-			App.priorAnimation = App.defaultAnimation;
+			// App.priorAnimation = App.defaultAnimation;
 			App.currentAnimation = App.defaultAnimation;
-			App.animations[App.defaultAnimation].init();
+		},
+
+		demoSwitch: function (Demo) {
+			var module = Demo.selectedDemo;
+
+			App.priorAnimation = App.currentAnimation;
+			App.currentAnimation = module;
+
+			App.resetPrior();
+
+			if (App.animations[module] !== undefined) {
+				if(App.debug) console.log('App: module already loaded');
+				App.animations[module].init();
+				return;
+
+			} else {
+				require(['demos/demo' + module], function (ModuleObject) {
+
+					if(App.debug) console.log('App: loading module', 'demos/demo'+module);
+
+					App.animations[module] = ModuleObject(App);
+
+					App.animations[module].init();
+				});
+			}
+		},
+
+		resetPrior: function() {
+			if(App.debug) console.log('App: resetting', App.priorAnimation);
+			var type = 'soft';
+			if (App.priorAnimation !== App.currentAnimation) {
+				type = 'hard';
+			}
+
+			if(App.animations[App.priorAnimation]) {
+				App.animations[App.priorAnimation].reset(type);
+			}
+		},
+
+		appinit: function () {
+			App.setup();
+			header.init();
+			E.subscribe('app/demoSwitch', App.demoSwitch);
+			App.demoSwitch({selectedDemo: App.defaultAnimation})
 		}
 
 	};
