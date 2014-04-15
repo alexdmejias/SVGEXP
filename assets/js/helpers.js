@@ -3,7 +3,6 @@ define(function () {
     return {
         stopTimer: function (timer) {
             window.clearTimeout(timer);
-            console.info('helper:', 'stopped a timer with an id of', timer);
         },
 
         // set the with of the parent element. If no width is provided
@@ -15,7 +14,6 @@ define(function () {
 
             elem.style.width = width;
             elem.style.height = height;
-            console.info('helper:', 'setting witdth and height to', width, height);
         },
 
         // generate a random integer between the provided parameters
@@ -27,6 +25,16 @@ define(function () {
                 min = 0;
             }
             return Math.floor(Math.random() * (max - min + 1)) + min;
+        },
+
+        genGrid: function(x, y) {
+            var grid = [];
+            for (var i = 0; x > i; i++) {
+                for (var h = 0; y > h; h++) {
+                    grid.push([i, h]);
+                }
+            }
+            return grid;
         }
     };
 
