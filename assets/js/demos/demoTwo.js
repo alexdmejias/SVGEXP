@@ -29,7 +29,7 @@ define(['../helpers'], function (h) {
 			console.log('Two: module one init');
 			setupCanvas();
 			calcMaxQuantity();
-			genGrid(horQ, verQ);
+			remainingCordinates = h.genGrid(horQ, verQ);
 			animationStart();
 		}
 
@@ -46,17 +46,6 @@ define(['../helpers'], function (h) {
 		function calcMaxQuantity() {
 			horQ = Math.floor((parseInt(app.sel.container.clientWidth) - 50) / (p + l));
 			verQ = Math.floor((parseInt(app.sel.container.clientHeight) - 50) / (p + l));
-		}
-
-		// generates an array of cordinates for the loop to pick from
-		function genGrid(x, y) {
-			var grid = [];
-			for (var i = 0; x > i; i++) {
-				for (var h = 0; y > h; h++) {
-					grid.push([i, h]);
-				}
-			}
-			remainingCordinates = grid;
 		}
 
 		// given an X and Y, it will create a square, it will then animate its stroke
