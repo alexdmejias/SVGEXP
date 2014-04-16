@@ -1,4 +1,3 @@
-'use strict';
 define(['../helpers'], function (h) {
     'use strict';
     function demo(app) {
@@ -8,96 +7,90 @@ define(['../helpers'], function (h) {
                     opacity: 0
                 },
                 end: {
-                    opacity: 0.5
-                }
+                    opacity: 0.75
+                },
+                fadeDuration: 50
             },
             gridLineAttrs = {
                 width: 1,
                 color: '#bbb'
             },
-
-            newShapeDelay = 50, // amount of time between new shapes being generated
-
-            globalTimer = null, // placeholder for the timer var
-
+            newShapeDelay = 5, // amount of time between new shapes being generated
+            newShapeTimer = null, // placeholder for the timer var
             shapeLength = 50, // the length of each shape
-
-            gridLength = 10, // how many boxes per grid side
-
-            gridCordinates = [], // placeholder for the coordinates
-
-            gridCordinatesIds = [], // grid ids placeholder
-
-            placeShapesTimer = null,
-
+            gridLength = 5, // how many boxes per grid side
+            remainingCoordinates = [], // placeholder for the coordinates
             currShapeCount = 0, // placeholder for the current amount of shapes
+            maxShapesTotal = 50; // maximum amount of shapes(triangles) to make
 
-            maxShapesTotal = 400; // maximum amount of shapes(triangles) to make
-
-        function init () {
+        /**
+         * kicks things off
+         * @return {none}
+         */
+        function init() {
             setupCanvas();
+
+            remainingCoordinates = genCoordinates(gridLength, gridLength, 4);
+
             genGridLines();
+
         }
 
-        function reset () {
+        function reset() {
             console.log('resetting anim D');
             app.parentGroup.clear();
             currShapeCount = 0;
-            gridCordinatesIds = [];
-            h.stopTimer(globalTimer);
+            remainingCoordinates = [];
+            h.stopTimer(newShapeTimer);
         }
 
-        function setupCanvas () {
+        function setupCanvas() {
             var width = shapeLength * gridLength,
                 height = width;
             h.setDrawWidth(width, height);
         }
 
-        function genCoordinate () {
-            var yRand = h.genRandom(gridLength - 1);
-            var xRand = h.genRandom(gridLength - 1);
-            var angle = h.genRandom(3) * 90;
+        function genCoordinates(x, y, z) {
+            var grid = [];
+            for (var i = 0; i < x; i++) {
+                for (var h = 0; h < x; h++) {
+                    for (var j = 0; j < z; j++) {
+                        grid.push([i, h, j]);
+                    }
+                }
+            }
 
-            return [xRand, yRand, angle];
-
-        }
-
-        function genId (coords) {
-            return coords.join('');
+            return grid;
         }
 
         // draw one of the shapes using one of the grid coordinates
-        function genShape (coords) {
-            // var colors= ['green', 'red', 'black'];
+        function genShape(coords) {
             app.parentGroup.polygon([
                 [shapeLength * coords[0], coords[1] * shapeLength],
                 [shapeLength * (coords[0] + 1), coords[1] * shapeLength],
                 [(coords[0] * shapeLength) + (shapeLength / 2), (coords[1] * shapeLength) + (shapeLength / 2)]
             ])
-            .rotate(coords[2], (coords[0] * shapeLength) + (shapeLength / 2), (coords[1] * shapeLength) + (shapeLength / 2))
-            // .attr(shape.start)
+            .rotate(coords[2] * 90, (coords[0] * shapeLength) + (shapeLength / 2), (coords[1] * shapeLength) + (shapeLength / 2))
             .style({
                 fill: colors[h.genRandom(4)],
-                opacity: 0
+                opacity: shape.start.opacity
             })
             .attr('class', coords.join(''))
-            .animate()
-            // .attr(shape.end);
+            .animate(shape.fadeDuration)
             .style({
-                opacity: 1
+                opacity: shape.end.opacity
             });
 
         }
 
         // draw the grid lines
-        function genGridLines () {
-            // group that wiil house grid lines
+        function genGridLines() {
+                // group that wiil house grid lines
             var gridGroup = app.parentGroup.group().attr('clas', 'grid'),
-            // cache of total line length
+                // cache of total line length
                 lineLength = gridLength * shapeLength,
-            // how much time has to pass after the grid finished for the shapes to appear
-                timeAfterGrid = (gridLength * 100) + 500,
-                self =
+                // how much time has to pass after the grid finished for the shapes to appear
+                timeAfterGrid = (gridLength * 50) + 500;
 
             gridLineAttrs.dasharray = lineLength;
             gridLineAttrs.dashoffset = lineLength;
@@ -117,40 +110,40 @@ define(['../helpers'], function (h) {
             });
 
             // call on the shapes generator to after the grid finished
-            placeShapesTimer = window.setTimeout(function () {
-                // self.generator.call(self);
-                generator();
-
+            newShapeTimer = window.setTimeout(function () {
+                animationStart();
             }, timeAfterGrid);
 
         }
 
-        function loop () {
-            var coords = genCoordinate();
-            var id = genId(coords);
+        function loop() {
+            // clear the previous timer, should help with performance
+            h.stopTimer(newShapeTimer);
 
-            if (gridCordinatesIds.indexOf(id) === -1) {
-                genShape(coords);
-                gridCordinatesIds.push(id);
-                currShapeCount++;
-                generator();
-            } else {
-                loop();
-            }
+            var r = h.genRandom(remainingCoordinates.length - 1);
+            genShape(remainingCoordinates[r]);
+
+            newShapeTimer = setTimeout(function () {
+                animationStart();
+            }, newShapeDelay);
+
+            remainingCoordinates.splice(r, 1);
+            currShapeCount++;
         }
 
-        function generator () {
-            if ((currShapeCount) < maxShapesTotal) {
-                globalTimer = window.setTimeout(function () {
-                    loop();
-                }, newShapeDelay);
+        function animationStart() {
+            if (currShapeCount < maxShapesTotal) {
+                loop();
+            } else {
+                // stop animation if there are no more coordinates left
+                h.stopTimer(newShapeTimer);
             }
         }
 
         return {
             init: init,
             reset: reset
-        }
+        };
     }
 
     return demo;
