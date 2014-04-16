@@ -8,7 +8,7 @@ define(['eventsManager'],
 			demoButtons.addEventListener('click', function (e) {
 				if (e.target.tagName === 'BUTTON') {
 
-					var currentDemo = e.target.getAttribute('data-demo');
+					var currentDemo = e.target.textContent;
 
 					E.publish('app/demoSwitch', {
 						selectedDemo: currentDemo
