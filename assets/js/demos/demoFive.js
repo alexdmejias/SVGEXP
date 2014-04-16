@@ -4,12 +4,12 @@ perlin noise*/
 define(['../helpers'], function (h) {
     'use strict';
     function demo (app) {
-       var  l = 50, // length of shape side
+       var  l = 100, // length of shape side
             colors = app.colorScheme,
             remainingCordinates = null,
-            gridMaxLength = 10,
-            maxNumShapes = 25,
-            minNumShapes = 10;
+            gridMaxLength = 5,
+            maxNumShapes = 10,
+            minNumShapes = 6;
 
         // style the parent box and start the whole animation
         function init () {
