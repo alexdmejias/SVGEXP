@@ -2,15 +2,17 @@
 * resize events
 * add requirejs grunt task
 * A: More programatic way to generating the shapes
+* A: remove the shadow filter on hard reset
 * B: center animation
 * D: Bug where animation restarts and persists when switching to a different demo
 * D: use the same polygon but just rotate it/move it/ change color
-* F: use colors from color palette
 * F: render w/o using the invisible squares
 * F: add ability to add more vertices
 * custom Google Analytics events
 * decouple
-* fix 'save' issues
+* import modules with the requirejs string plugin
+* fix 'save' issues (read: svg.js export plugin)
+* ~~F: use colors from color palette~~
 * ~~style header moar~~
 * ~~D: put polygons in group~~
 * ~~fix reset button~~
