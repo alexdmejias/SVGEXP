@@ -4,12 +4,13 @@ perlin noise*/
 define(['../helpers'], function (h) {
     'use strict';
     function demo (app) {
-       var  l = 100, // length of shape side
+       var  l = 50, // length of shape side
             colors = app.colorScheme,
             remainingCordinates = null,
             gridMaxLength = 5,
             maxNumShapes = 10,
-            minNumShapes = 6;
+            minNumShapes = 6,
+            squareRadius = 0;
 
         // style the parent box and start the whole animation
         function init () {
@@ -34,7 +35,7 @@ define(['../helpers'], function (h) {
 
             var rect = app.parentGroup.leftSide
                 // .rect(l, l)
-                .rect(l, l).radius(5)
+                .rect(l, l).radius(squareRadius)
                 // .circle(l)
                 .style('fill', color)
                 .move(coords[0] * l, coords[1] * l);
