@@ -7,38 +7,44 @@ define(['../helpers'], function (h) {
 			rangeSize = 10,
 			rangeSizeHalf = rangeSize / 2,
 			loopTimer = 20, // timer between each iteration
-			padding = 200, // padding for the squareGuides from the center of the grid to the square
+			padding = 200, // padding for the squareGuidesGroup from the center of the grid to the square
 			initited = false,
 			squareStyle = {
 				fill: 'none',
 				stroke: 'none'
 			},
 			polygonStyle = {
-				opacity: 0.25,
-				fill: 'red'
+				opacity: 0.25
 			},
+			colors = app.colorScheme,
+			color = null,
 			numPolygons = 10, // number of polygons to make
 			numVertices = 4,
-			polygons = [],
+			polygonsGroup = null,
 			ranges = [],
+			squareGuidesGroup = null, // holds the square guides
 			globalTimer = null;
 
 		function init() {
 			// check if it is being initiated from a hard reset
 			if (!initited) {
-				setup();
 				h.setDrawWidth(500, 500);
+				squareGuidesGroup = app.parentGroup.group().attr('class', 'squareGuides');
+				polygonsGroup = app.parentGroup.group().attr('class', 'polygons');
+				setup();
 				initited = true;
 			}
 
+			color = colors[h.genRandom(colors.length - 1)];
 			loop();
 		}
 
 		function reset(type) {
-			app.parentGroup.clear();
+			polygonsGroup.clear();
 			h.stopTimer(globalTimer);
 			if (type && type === 'hard') {
 				initited = false;
+				app.parentGroup.clear();
 			}
 		}
 
@@ -51,17 +57,14 @@ define(['../helpers'], function (h) {
 		}
 
 		function setup() {
+			squareGuidesGroup.rect(rangeSize, rangeSize).style(squareStyle).move(center - rangeSizeHalf,center - (rangeSize + padding) ),
+			squareGuidesGroup.rect(rangeSize, rangeSize).style(squareStyle).move(center + padding,center - rangeSizeHalf),
+			squareGuidesGroup.rect(rangeSize, rangeSize).style(squareStyle).move(center - rangeSizeHalf,center + padding),
+			squareGuidesGroup.rect(rangeSize, rangeSize).style(squareStyle).move(center - (rangeSize + padding) ,center - rangeSizeHalf)
 
-			var squareGuides = [
-				app.parentGroup.rect(rangeSize, rangeSize).style(squareStyle).move(center - rangeSizeHalf,center - (rangeSize + padding) ),
-				app.parentGroup.rect(rangeSize, rangeSize).style(squareStyle).move(center + padding,center - rangeSizeHalf),
-				app.parentGroup.rect(rangeSize, rangeSize).style(squareStyle).move(center - rangeSizeHalf,center + padding),
-				app.parentGroup.rect(rangeSize, rangeSize).style(squareStyle).move(center - (rangeSize + padding) ,center - rangeSizeHalf)
-			];
-
-			// get the ranges of each of the squareGuides
+			// get the ranges of each of the squareGuidesGroup
 			for (var i = 0; i < 4; i++) {
-				var currSquare = squareGuides[i].bbox();
+				var currSquare = squareGuidesGroup.get(i).bbox();
 				ranges.push([[currSquare.x, currSquare.cx + (currSquare.width / 2) ], [currSquare.y, currSquare.cy + (currSquare.height / 2)]]);
 			}
 		}
@@ -72,8 +75,9 @@ define(['../helpers'], function (h) {
 		 */
 		function renderPolygons() {
 			for (var i = 0; i < numPolygons; i++) {
-				var polygon = app.parentGroup.polygon(genVertices(ranges)).style(polygonStyle);
-				polygons.push(polygon);
+				polygonsGroup.polygon(genVertices(ranges))
+					.style(polygonStyle)
+					.style('fill', color);
 			}
 		}
 
