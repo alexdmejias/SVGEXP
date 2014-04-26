@@ -1,5 +1,5 @@
-define(['svg', 'events', 'colors', 'header', 'eventsManager', 'helpers'],
-	function (SVG, events, colors, header, E, h) {
+define(['svg', 'colors', 'header', 'eventsManager'],
+	function (SVG, colors, header, EvtsMgr) {
 	'use strict';
 
 	var App = {
@@ -75,7 +75,7 @@ define(['svg', 'events', 'colors', 'header', 'eventsManager', 'helpers'],
 		appinit: function () {
 			App.setup();
 			header.init();
-			E.subscribe('app/demoSwitch', App.demoSwitch);
+			EvtsMgr.subscribe('app/demoSwitch', App.demoSwitch);
 			App.demoSwitch({selectedDemo: App.defaultAnimation})
 		}
 
