@@ -1,4 +1,4 @@
-define(['../helpers'], function (h) {
+define(['../helpers'], function (Helpers) {
     'use strict';
     function demo(app) {
         var colors = app.colorScheme,
@@ -47,7 +47,7 @@ define(['../helpers'], function (h) {
         function setupCanvas() {
             var width = shapeLength * gridLength,
                 height = width;
-            h.setDrawWidth(width, height);
+            Helpers.setDrawWidth(width, height);
         }
 
         function genCoordinates(x, y, z) {
@@ -72,7 +72,7 @@ define(['../helpers'], function (h) {
             ])
             .rotate(coords[2] * 90, (coords[0] * shapeLength) + (shapeLength / 2), (coords[1] * shapeLength) + (shapeLength / 2))
             .style({
-                fill: colors[h.genRandom(4)],
+                fill: colors[Helpers.genRandom(4)],
                 opacity: shape.start.opacity
             })
             .attr('class', coords.join(''))
@@ -118,9 +118,9 @@ define(['../helpers'], function (h) {
 
         function loop() {
             // clear the previous timer, should help with performance
-            h.stopTimer(newShapeTimer);
+            Helpers.stopTimer(newShapeTimer);
 
-            var r = h.genRandom(remainingCoordinates.length - 1);
+            var r = Helpers.genRandom(remainingCoordinates.length - 1);
             genShape(remainingCoordinates[r]);
 
             newShapeTimer = setTimeout(function () {
@@ -136,7 +136,7 @@ define(['../helpers'], function (h) {
                 loop();
             } else {
                 // stop animation if there are no more coordinates left
-                h.stopTimer(newShapeTimer);
+                Helpers.stopTimer(newShapeTimer);
             }
         }
 
