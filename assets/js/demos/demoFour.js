@@ -24,7 +24,7 @@ define(['../helpers'], function (Helpers) {
             remainingCoordinates = [], // placeholder for the coordinates
             currShapeCount = 0, // placeholder for the current amount of shapes
             maxShapesTotal = 50, // maximum amount of shapes(triangles) to make
-            trianglesGroup = null,
+            trianglesGroup = null, // group that will house the triangles
             gridLinesGroup = null; // group that will house grid lines
 
 
@@ -35,7 +35,7 @@ define(['../helpers'], function (Helpers) {
         function init() {
             if(!initiated) {
                 setupCanvas();
-                trianglesGroup = app.parentGroup.group();
+                trianglesGroup = app.parentGroup.group().attr('class', 'triangles');
                 gridLinesGroup = app.parentGroup.group().attr('class', 'grid');
                 timeAfterGrid = (gridLength * 50) + 500;
                 genGridLines();
@@ -60,7 +60,7 @@ define(['../helpers'], function (Helpers) {
             Helpers.stopTimer(newShapeTimer);
 
             if (type && type === 'hard') {
-                gridLinesGroup.clear();
+                app.parentGroup.clear();
                 initiated = false;
             }
         }
