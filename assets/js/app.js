@@ -12,7 +12,7 @@ define(['svg', 'colors', 'header', 'eventsManager'],
 		},
 		currentAnimation : '',
 		priorAnimation: '',
-		defaultAnimation: 'Four',
+		defaultAnimation: 'Six',
 		animations: {},
 		viewportSize: {},
 		numOfColorSchemes: colors.length,
@@ -28,10 +28,10 @@ define(['svg', 'colors', 'header', 'eventsManager'],
 
 			App.colorScheme = colors[Math.floor(Math.random() * App.numOfColorSchemes)];
 
-			App.draw = SVG('container').fixSubPixelOffset();
+			// App.draw = SVG('container').fixSubPixelOffset();
+			App.draw = SVG('container');
 			App.parentGroup = App.draw.group().attr('class', 'parentGroup');
 
-			// App.priorAnimation = App.defaultAnimation;
 			App.currentAnimation = App.defaultAnimation;
 		},
 
@@ -72,7 +72,21 @@ define(['svg', 'colors', 'header', 'eventsManager'],
 			}
 		},
 
+		events: {
+			resize: function() {
+				App.sel.container.style.width = document.body.clientWidth + 'px';
+				App.draw.style.width = document.body.clientWidth + 'px';
+			}
+		},
+
+		bindEvents: function(object) {
+			for(var e in App.events) {
+				object.addEventListener(e, App.events[e])
+			}
+		},
+
 		appinit: function () {
+			App.bindEvents(window);
 			App.setup();
 			header.init();
 			EvtsMgr.subscribe('app/demoSwitch', App.demoSwitch);
