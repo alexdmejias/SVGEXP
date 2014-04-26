@@ -15,33 +15,54 @@ define(['../helpers'], function (Helpers) {
                 width: 1,
                 color: '#bbb'
             },
+            initiated = false,
             newShapeDelay = 5, // amount of time between new shapes being generated
             newShapeTimer = null, // placeholder for the timer var
             shapeLength = 50, // the length of each shape
             gridLength = 5, // how many boxes per grid side
+            timeAfterGrid = null, // how much time has to pass after the grid finished for the shapes to appear
             remainingCoordinates = [], // placeholder for the coordinates
             currShapeCount = 0, // placeholder for the current amount of shapes
-            maxShapesTotal = 50; // maximum amount of shapes(triangles) to make
+            maxShapesTotal = 50, // maximum amount of shapes(triangles) to make
+            polygonGroup = null,
+            gridLinesGroup = null; // group that will house grid lines
+
 
         /**
          * kicks things off
          * @return {none}
          */
         function init() {
-            setupCanvas();
+            if(!initiated) {
+                setupCanvas();
+                polygonGroup = app.parentGroup.group();
+                gridLinesGroup = app.parentGroup.group().attr('class', 'grid');
+                timeAfterGrid = (gridLength * 50) + 500;
+                genGridLines();
+
+                initiated = true;
+            }
 
             remainingCoordinates = genCoordinates(gridLength, gridLength, 4);
+            // call on the shapes generator to after the grid finished
+            newShapeTimer = window.setTimeout(function () {
+                animationStart();
+            }, timeAfterGrid);
 
-            genGridLines();
+            timeAfterGrid = 0;
 
         }
 
-        function reset() {
-            console.log('resetting anim D');
-            app.parentGroup.clear();
+        function reset(type) {
+            polygonGroup.clear();
             currShapeCount = 0;
             remainingCoordinates = [];
-            h.stopTimer(newShapeTimer);
+            Helpers.stopTimer(newShapeTimer);
+
+            if (type && type === 'hard') {
+                gridLinesGroup.clear();
+                initiated = false;
+            }
         }
 
         function setupCanvas() {
@@ -65,7 +86,8 @@ define(['../helpers'], function (Helpers) {
 
         // draw one of the shapes using one of the grid coordinates
         function genShape(coords) {
-            app.parentGroup.polygon([
+
+            polygonGroup.polygon([
                 [shapeLength * coords[0], coords[1] * shapeLength],
                 [shapeLength * (coords[0] + 1), coords[1] * shapeLength],
                 [(coords[0] * shapeLength) + (shapeLength / 2), (coords[1] * shapeLength) + (shapeLength / 2)]
@@ -80,40 +102,30 @@ define(['../helpers'], function (Helpers) {
             .style({
                 opacity: shape.end.opacity
             });
-
         }
 
         // draw the grid lines
         function genGridLines() {
-                // group that wiil house grid lines
-            var gridGroup = app.parentGroup.group().attr('clas', 'grid'),
                 // cache of total line length
-                lineLength = gridLength * shapeLength,
-                // how much time has to pass after the grid finished for the shapes to appear
-                timeAfterGrid = (gridLength * 50) + 500;
+            var lineLength = gridLength * shapeLength;
 
             gridLineAttrs.dasharray = lineLength;
             gridLineAttrs.dashoffset = lineLength;
 
             for (var i = 0; i < gridLength + 1; i++) {
                 // horizontal lines
-                gridGroup.polyline([[0, shapeLength * i], [lineLength, shapeLength * i ]])
-                .stroke(gridLineAttrs);
+                gridLinesGroup.polyline([[0, shapeLength * i], [lineLength, shapeLength * i ]])
+                    .stroke(gridLineAttrs);
                 // vertical lines
-                gridGroup.polyline([[shapeLength * i, 0], [shapeLength * i, lineLength ]])
-                .stroke(gridLineAttrs);
+                gridLinesGroup.polyline([[shapeLength * i, 0], [shapeLength * i, lineLength ]])
+                    .stroke(gridLineAttrs);
+
             }
 
             // animate each line
-            gridGroup.each(function (i) {
+            gridLinesGroup.each(function (i) {
                 this.animate(75 * i).stroke({'dashoffset': 0});
             });
-
-            // call on the shapes generator to after the grid finished
-            newShapeTimer = window.setTimeout(function () {
-                animationStart();
-            }, timeAfterGrid);
-
         }
 
         function loop() {
