@@ -17,12 +17,6 @@ a, a:visited {
 	letter-spacing: 1px;
 }
 
-.wrap {
-	&.blurry {
-		-webkit-filter: blur(2px);
-	}
-}
-
 .top {
 	display: flex;
 	justify-content: space-between;
@@ -79,7 +73,9 @@ nav {
 	left: 0;
 	right: 0;
 	position: fixed;
-	display: none;
+	visibility: hidden;
+	opacity: 0;
+	transition: all 0.5s;
 	text-align: center;
 	&:before {
 		height: 100%;
@@ -88,7 +84,9 @@ nav {
 		display: inline-block;
 	}
 	&.showing {
-		display: block;
+		visibility: visible;
+		opacity: 1;
+
 	}
 
 	div {
