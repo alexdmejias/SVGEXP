@@ -51,6 +51,13 @@ module.exports = function (grunt) {
 			}
 		},
 
+		open: {
+			dev: {
+				path: 'http://localhost:8000/',
+				app: 'Google Chrome'
+			}
+		},
+
 		connect: {
 			server: {
 				options: {
@@ -78,5 +85,5 @@ module.exports = function (grunt) {
 	});
 
 	grunt.registerTask('build', ['sass', 'autoprefixer']);
-	grunt.registerTask('default', ['build', 'connect', 'watch']);
+	grunt.registerTask('default', ['build', 'connect', 'open', 'watch']);
 };
