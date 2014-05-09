@@ -1,6 +1,5 @@
-'use strict';
-
 define(function () {
+	'use strict';
 	var subscribers = {};
 
 	function subscribe(type, fn) {
@@ -11,7 +10,6 @@ define(function () {
 		if (subscribers[type].indexOf(fn) === -1) {
 			subscribers[type].push(fn);
 		}
-		// console.log('subscribe', subscribers, type, fn);
 	}
 
 	function unsubscribe(type, fn) {
@@ -26,7 +24,6 @@ define(function () {
 		if (index > -1) {
 			listeners.splice(index, 1);
 		}
-		// console.log('unsubscribe', subscribers, type, fn);
 	}
 
 	function publish(type, evtObj) {
@@ -43,12 +40,11 @@ define(function () {
 		for (var i = 0, l = listeners.length; i < l; i++) {
 			listeners[i](evtObj);
 		}
-		// console.info('publish', subscribers, type, evtObj);
 	}
 
 	return {
 		subscribe: subscribe,
 		unsubscribe: unsubscribe,
 		publish: publish
-	}
+	};
 });
