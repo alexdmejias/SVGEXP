@@ -1,12 +1,13 @@
 define(['eventsManager'],
-	function (E) {
+	function (EvtsMgr) {
+		'use strict';
 		function demoButtons(event) {
 			EvtsMgr.publish('app/demoSwitch', {
-				selectedDemo: event.target.textContent;
+				selectedDemo: event.target.textContent
 			});
 		}
 
-		function info(event) {
+		function info() {
 			EvtsMgr.publish('modal/show', {
 				template: 'more-info'
 			});
@@ -32,12 +33,10 @@ define(['eventsManager'],
 						controls(e);
 						break;
 					case 'demos':
-						console.log('demos');
-						demoButtons(e);
+						demoButtons();
 						break;
 					case 'title':
 						info(e);
-						console.log('title');
 						break;
 					default:
 						console.log('huh?');
@@ -49,6 +48,6 @@ define(['eventsManager'],
 
 		return {
 			init: init
-		}
+		};
 	}
 );
