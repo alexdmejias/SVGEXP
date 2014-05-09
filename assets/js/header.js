@@ -1,18 +1,13 @@
 define(['eventsManager'],
 	function (E) {
-
 		function demoButtons(event) {
-			var currentDemo = event.target.textContent;
-
-			E.publish('app/demoSwitch', {
-				selectedDemo: currentDemo
+			EvtsMgr.publish('app/demoSwitch', {
+				selectedDemo: event.target.textContent;
 			});
 		}
 
 		function info(event) {
-			event.preventDefault();
-
-			E.publish('modal/show', {
+			EvtsMgr.publish('modal/show', {
 				template: 'more-info'
 			});
 
@@ -20,14 +15,18 @@ define(['eventsManager'],
 		}
 
 		function controls() {
-			console.info('this will house the controls');
+			EvtsMgr.publish('modal/show', {
+				template: 'more-controls'
+			});
+
+			ga('send', 'event', 'category', 'controls_show');
 		}
 
 		function init() {
 			var buttons = document.getElementsByTagName('nav')[0];
 
 			buttons.addEventListener('click', function(e) {
-
+				e.preventDefault();
 				switch(e.target.parentNode.className) {
 					case 'controls':
 						controls(e);
