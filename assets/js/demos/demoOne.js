@@ -13,19 +13,20 @@ define(['../helpers'], function (h) {
 			shapeMaxWidth = 500,
 			// possible colors
 			colors = app.colorScheme,
+			initiated = false,
 			shadow = {
-			style: {
-				'opacity': 0.05,
-				'filter': 'url(#shadow)'
-			},
-			height: 10,
-			blur: {
-				height: 50,
-				blur: 2
-			},
-			yPos: 500,
-			points: []
-		};
+				style: {
+					'opacity': 0.05,
+					'filter': 'url(#shadow)'
+				},
+				height: 10,
+				blur: {
+					height: 50,
+					blur: 2
+				},
+				yPos: 500,
+				points: [],
+			};
 
 		function init() {
 			console.log('One: module one init');
@@ -35,19 +36,28 @@ define(['../helpers'], function (h) {
 			polygons = [];
 
 			// clear the parent group
-			app.parentGroup.clear();
+			// app.parentGroup.clear();
 
 			render();
-			addShawdow();
+			if (!initiated) {
+				createShadow();
+				initiated = true;
+			}
+			modifyShadow();
+
 		}
 
 		function setupCanvas() {
 			h.setDrawWidth(shapeMaxWidth, shapeMaxWidth + shadow.height);
 		}
 
-		function reset() {
+		function reset(type) {
 			console.log('resetting animation A');
 			app.parentGroup.clear();
+            if (type && type === 'hard') {
+                initiated = false;
+                // TODO: remove def element with shadow here
+            }
 		}
 
 		function pointsMaker(numPoints) {
@@ -73,7 +83,27 @@ define(['../helpers'], function (h) {
 
 		}
 
-		function addShawdow() {
+		function createShadow() {
+			if (!document.getElementById('shadow')) {
+				var defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs'),
+					filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter'),
+					blur = document.createElementNS('http://www.w3.org/2000/svg', 'feGaussianBlur');
+
+				filter.setAttribute('id', 'shadow');
+				filter.setAttribute('height', shadow.blur.height);
+
+				blur.setAttribute('in', 'SourceGraphic');
+				blur.setAttribute('stdDeviation', shadow.blur.blur);
+
+				document.getElementById(app.parentGroup).appendChild(defs).appendChild(filter).appendChild(blur);
+			}
+		}
+
+		function modifyShadow() {
+			if (!shadow.initiated) {
+				createShadow();
+			}
+
 			// set to defaults
 			shadow.points = [shapeMaxWidth, 0];
 
@@ -93,26 +123,11 @@ define(['../helpers'], function (h) {
 			var shadowElem = app.parentGroup.ellipse(shadow.points[1] - shadow.points[0], shadow.height)
 				.move(shadow.points[0], shadow.yPos)
 				.style(shadow.style);
-
-			if (!document.getElementById('shadow')) {
-				var defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs'),
-					filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter'),
-					blur = document.createElementNS('http://www.w3.org/2000/svg', 'feGaussianBlur');
-
-				filter.setAttribute('id', 'shadow');
-				filter.setAttribute('height', shadow.blur.height);
-
-				blur.setAttribute('in', 'SourceGraphic');
-				blur.setAttribute('stdDeviation', shadow.blur.blur);
-
-				document.getElementById(app.parentGroup).appendChild(defs).appendChild(filter).appendChild(blur);
-			}
 		}
-
 
 		return {
 			init: init,
-			reset: reset
+			reset: reset,
 		};
 	};
 
