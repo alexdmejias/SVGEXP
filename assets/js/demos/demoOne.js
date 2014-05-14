@@ -56,7 +56,7 @@ define(['../helpers'], function (h) {
 			app.parentGroup.clear();
             if (type && type === 'hard') {
                 initiated = false;
-                // TODO: remove def element with shadow here
+                document.getElementById('shadow').parentElement.remove()
             }
 		}
 
