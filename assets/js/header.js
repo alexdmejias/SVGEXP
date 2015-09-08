@@ -33,13 +33,13 @@ define(['eventsManager'],
 						controls(e);
 						break;
 					case 'demos':
-						demoButtons();
+						demoButtons(e);
 						break;
 					case 'title':
 						info(e);
 						break;
 					default:
-						console.log('huh?');
+						console.log('clicked the header');
 				}
 
 			});

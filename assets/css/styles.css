@@ -336,16 +336,16 @@ a, a:visited {
   text-transform: uppercase;
   letter-spacing: 1px; }
 
-.wrap.blurry {
-  -webkit-filter: blur(2px); }
-
-.top a {
-  padding: 3px 10px;
-  display: inline-block;
-  width: 49%; }
-  .top a:last-child {
-    padding: 0;
-    text-align: right; }
+.top {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 3px 10px; }
 
 nav {
   background: #BCBBC0;
@@ -365,55 +365,60 @@ nav {
   -ms-flex-pack: justify;
   justify-content: space-between; }
   nav h1 {
-    margin: 0; }
+    margin: 0;
+    line-height: 0.9; }
     nav h1 a {
       font-size: 0.35em;
       font-weight: normal; }
-  nav a {
-    border: 2px solid white;
+  nav button {
+    color: #fff;
+    border: 2px solid #fff;
     padding: 5px 5px 3px;
     display: inline-block;
     position: relative;
-    /* 		&:before, &:after {
-			position: absolute;
-			content: '';
-			border: 1px solid #BCBBC0;
-			width: 90%;
-			left: 5%;
-			top: -2px;
-		}
-		&:after {
-			top: 100%;
-		} */ }
-    nav a:hover {
+    text-transform: uppercase; }
+    nav button:hover {
       border-color: black;
       color: black; }
 
-#container, svg {
-  display: block;
-  margin: 0 auto;
-  width: 100%; }
+#container {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center; }
 
 .b path {
   fill: none; }
 
-#modalBackground, .modal {
+.modal {
   background: rgba(0, 0, 0, 0.5);
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   position: fixed;
-  display: none;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
   text-align: center; }
-  #modalBackground:before, .modal:before {
+  .modal:before {
     height: 100%;
     content: '';
     vertical-align: middle;
     display: inline-block; }
-  #modalBackground.showing, .modal.showing {
-    display: block; }
-  #modalBackground div, .modal div {
+  .modal.showing {
+    visibility: visible;
+    opacity: 1; }
+  .modal div {
     width: 50%;
     vertical-align: middle;
     display: inline-block;

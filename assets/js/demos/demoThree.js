@@ -29,7 +29,6 @@ define(['../helpers'], function (h) {
 			app.parentGroup.clear();
 			h.stopTimer(globalTimer);
 			if (type === 'hard') {
-				console.warn('Three: hard reset');
 			}
 		}
 

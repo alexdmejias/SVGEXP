@@ -1,69 +1,82 @@
 'use strict';
-define([], function () {
-	return {
+define(['eventsManager'], function (EvtsMgr) {
+	var Modal = {
 		created: false,
 		visible: false,
 		bgElem: null,
 		fgElem: null,
 		create: function () {
-			this.bgElem = document.createElement('div');
-			this.bgElem.setAttribute('class', 'modal');
-			document.getElementsByTagName('body')[0].appendChild(this.bgElem);
+			Modal.bgElem = document.createElement('div');
+			Modal.bgElem.setAttribute('class', 'modal');
+			document.getElementsByTagName('body')[0].appendChild(Modal.bgElem);
 
-			this.fgElem = document.createElement('div');
-			this.fgElem.setAttribute('class', 'modalForeground');
+			Modal.fgElem = document.createElement('div');
+			Modal.fgElem.setAttribute('class', 'modalForeground');
 
-			this.bgElem.appendChild(this.fgElem);
+			Modal.bgElem.appendChild(Modal.fgElem);
 
 		},
 
-		events: function () {
-			var elem = this.bgElem;
-			var hide = function (e) {
-				console.log(e);
-				console.log(e.target.className);
-				if (e.target.className === 'modal showing') {
-					elem.className = 'modal';
-					document.getElementsByClassName('wrap')[0].className = 'wrap';
+		events: {
+			hide: {
+				trigger: 'click',
+				handler: function(e) {
+					if (e.target.className === 'modal showing') {
+						Modal.bgElem.className = 'modal';
+					}
 				}
-			};
+			}
+		},
 
-			this.bgElem.addEventListener('click', hide);
+		bindEvents: function(object) {
+			for (var e in Modal.events) {
+				object.addEventListener(Modal.events[e].trigger, Modal.events[e].handler, object)
+			}
 
+			return object
 		},
 
 		init: function () {
-			if (!this.created) {
-				this.create();
-				this.created = true;
+			if (!Modal.created) {
+				Modal.create();
+				Modal.created = true;
 			}
 
-			this.events();
+			Modal.bindEvents(Modal.bgElem);
+
+			EvtsMgr.subscribe('modal/show', this.show);
 		},
 
+		/**
+		 * removed all the children from the foreground element
+		 * @return {this} the modal object
+		 */
 		clear: function () {
 			while (this.fgElem.firstChild) {
 				this.fgElem.removeChild(this.fgElem.firstChild);
 			}
-
 			return this;
 		},
 
 		show: function (template) {
-			this.init();
+			// delete every from the modal before showing it again
+			Modal.clear();
 
-			this.clear();
 			if (typeof(template) !== 'undefined') {
-				this.fgElem.innerHTML = document.getElementById(template + '-template').innerHTML;
+				Modal.fgElem.innerHTML = document.getElementById(template.template + '-template').innerHTML;
 			}
 
-			this.bgElem.className = 'modal showing';
-			document.getElementsByClassName('wrap')[0].className = 'wrap blurry';
+			Modal.bgElem.className = 'modal showing';
 
 			return this;
 		},
 
-		text: function (text) {
+		/**
+		 * add a paragraph of text to the modal, currently not being used
+		 * @param  {string | array} text string/array to display in the foreground elem.
+		 * @return {this} the modal element
+		 */
+		/*text: function (text) {
 			this.clear();
 
 			if (typeof(text) === 'string') {
@@ -77,6 +90,8 @@ define([], function () {
 			}
 
 			return this;
-		}
+		}*/
 	};
+
+	return Modal;
 });

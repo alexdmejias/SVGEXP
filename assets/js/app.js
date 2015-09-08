@@ -1,5 +1,5 @@
-define(['svg', 'colors', 'header', 'eventsManager'],
-	function (SVG, colors, header, EvtsMgr) {
+define(['svg', 'colors', 'header', 'eventsManager', 'modal'],
+	function (SVG, Colors, Header, EvtsMgr, Modal) {
 	'use strict';
 
 	var App = {
@@ -15,7 +15,7 @@ define(['svg', 'colors', 'header', 'eventsManager'],
 		defaultAnimation: 'Six',
 		animations: {},
 		viewportSize: {},
-		numOfColorSchemes: colors.length,
+		numOfColorSchemes: Colors.length,
 		debug: true,
 		// modal: modal,
 
@@ -26,7 +26,7 @@ define(['svg', 'colors', 'header', 'eventsManager'],
 			App.sel.container.style.width = App.viewportSize.width + 'px';
 			App.sel.container.style.height = App.viewportSize.height - App.sel.header.clientHeight - 4 + 'px';
 
-			App.colorScheme = colors[Math.floor(Math.random() * App.numOfColorSchemes)];
+			App.colorScheme = Colors[Math.floor(Math.random() * App.numOfColorSchemes)];
 
 			// App.draw = SVG('container').fixSubPixelOffset();
 			App.draw = SVG('container');
@@ -58,11 +58,16 @@ define(['svg', 'colors', 'header', 'eventsManager'],
 					App.animations[module].init();
 				});
 			}
+
+			ga('send', 'event', 'category', 'demoSwitch', App.currentAnimation);
+
 		},
 
 		resetPrior: function() {
-			if(App.debug) console.log('App: resetting', App.priorAnimation);
+			if(App.debug) console.log('App: sending reset command to', App.priorAnimation);
+
 			var type = 'soft';
+
 			if (App.priorAnimation !== App.currentAnimation) {
 				type = 'hard';
 			}
@@ -88,7 +93,8 @@ define(['svg', 'colors', 'header', 'eventsManager'],
 		appinit: function () {
 			App.bindEvents(window);
 			App.setup();
-			header.init();
+			Header.init();
+			Modal.init();
 			EvtsMgr.subscribe('app/demoSwitch', App.demoSwitch);
 			App.demoSwitch({selectedDemo: App.defaultAnimation})
 		}
